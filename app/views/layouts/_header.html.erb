@@ -1,0 +1,19 @@
+<nav class="py-2 bg-light fixed-top border-bottom">
+  <div class="container d-flex flex-wrap">
+    <ul class="nav me-auto">
+      <li class="nav-item">
+        <%= link_to ' Home', root_path, class: "nav-link link-dark px-2 active bi bi-house-door" %>
+      </li>
+      <li class="nav-item"><a href="#" class="nav-link link-dark px-2 bi bi-messenger"> Facebook</a></li>
+      <li class="nav-item">
+        <%= link_to ' Guide', help_path, class: "nav-link link-dark px-2 bi bi-info-circle" %>
+      </li>
+    </ul>
+    <ul class="nav">
+      <li class="nav-item">
+        <%= link_to ' Login', login_path, class: "nav-link link-dark px-2 bi bi-box-arrow-in-right" %>
+      </li>
+      <li class="nav-item"><a href="#" class="nav-link link-dark px-2 bi bi-person-plus"> Register</a></li>
+    </ul>
+  </div>
+</nav>
