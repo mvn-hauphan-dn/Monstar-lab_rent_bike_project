@@ -57,7 +57,7 @@ gem 'pry'
 
 gem 'faker'
 
-gem 'dotenv', '~> 2.7', '>= 2.7.6'
+gem 'dotenv-rails'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
