@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_31_033825) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.string "remember_digest"
     t.integer "role"
     t.string "address"
     t.string "phone_number"

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  attr_accessor :remember_token
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
@@ -21,6 +22,10 @@ class User < ApplicationRecord
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+  def forget
+    update_attribute(:remember_digest, nil)
   end
 
   def authenticated?(attribute, token)
