@@ -1,0 +1,33 @@
+<div class="container py-3 h-100">
+  <div class="row d-flex align-items-center justify-content-center h-100">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+      <%= image_tag "logo.jpg", class: "img-fluid" %>
+    </div>
+    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+      <div class="d-flex justify-content-center mb-3 pb-1">
+        <%= image_tag "logo.png" %>
+      </div>
+
+      <h1 class="mb-3 pb-3 text-center display-3">Reset password</h5>
+      
+      <%= form_with url: password_reset_path(params[:id]), method: :patch do |f| %>
+        <%= f.hidden_field :email, value: @user.email %>
+        <div class="form-floating mb-4">
+          <%= f.password_field :password, class: "form-control", id: "floatingPassword", placeholder: "Password" %>
+          <%= f.label :password, for: "floatingPassword" %>
+          <div class="form-text text-danger"><%= @user.errors.full_messages_for(:password).first %></div>
+        </div>
+
+        <div class="form-floating mb-4">
+          <%= f.password_field :password_confirmation, class: "form-control", id: "floatingInput", placeholder: "name@example.com" %>
+          <%= f.label :password_confirmation, "Confirmation", for: "floatingInput" %>
+          <div class="form-text text-danger" ><%= @user.errors.full_messages_for(:password_confirmation).first %></div>
+        </div>
+
+        <div class="d-flex justify-content-around align-items-center mb-4">
+          <%= f.submit "Update password", class: "btn btn-primary btn-lg btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
