@@ -8,4 +8,13 @@
 User.create!(name:  "Example User",
              email: ENV["USER_EMAIL"],
              password:              "123456",
-             password_confirmation: "123456")
+             password_confirmation: "123456",
+             activated_at: Time.zone.now,
+             role: 0)
+
+User.create!(name:  "Example User",
+             email: "hauphan@gmail.com",
+             password:              "123456",
+             password_confirmation: "123456",
+             activated_at: Time.zone.now,
+             role: 1)
