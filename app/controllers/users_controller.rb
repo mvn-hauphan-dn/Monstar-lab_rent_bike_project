@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url, status: 303
     else
-      render 'new', status: 422
+      render :new, status: 422
     end
   end
 
