@@ -1,8 +1,8 @@
 <div class="row w-100"> 
   <div class="col-2 bg-light h-100" style="min-height: 930px">
     <div class="row justify-content-center items-align-center text-center" style="min-height: 200px">
-      <%= image_tag "xe_so.jpg", class: "h-100 w-100 rounded-circle mt-3", style: "max-height: 200px; max-width: 200px" %>
-      <%= link_to ' My name', current_user, class: "nav-link link-dark px-2 bi bi-person" %>
+      <%= current_user.avatar.present? ? image_tag(current_user.avatar, class:"h-100 w-100 rounded-circle mt-3", style:"max-height: 200px; max-width: 200px") : image_tag("avatar_default.jpg", class:"h-100 w-100 rounded-circle mt-3", style:"max-height: 200px; max-width: 200px") %>
+      <%= link_to current_user.name, current_user, class: "nav-link link-dark px-2 bi bi-person" %>
     </div>
     <hr>
     <ul class="nav flex-column">

@@ -23,10 +23,10 @@ Category.create!(name: "Number Bike")
 Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
 
-30.times do 
-  Bike.create!(name: "ssssssssss",
-               user_id: 1,
-               category_id: 1,
-               price: 1000,
-               status: 1)
-end
+# 30.times do 
+#   Bike.create!(name: "ssssssssss",
+#                user_id: 1,
+#                category_id: 1,
+#                price: 1000,
+#                status: 1)
+# end

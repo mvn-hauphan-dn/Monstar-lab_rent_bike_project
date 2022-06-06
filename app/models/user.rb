@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
 
+  has_one_attached :avatar
   has_many :bikes
 
   before_save   :downcase_email
