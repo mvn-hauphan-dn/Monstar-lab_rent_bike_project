@@ -16,7 +16,7 @@ class PasswordResetsController < ApplicationController
       redirect_to root_url, status: 303
     else
       flash.now[:danger] = "Email address not found"
-      render 'new', status: 422
+      render :new, status: 422
     end
   end
 
@@ -26,15 +26,14 @@ class PasswordResetsController < ApplicationController
   def update
     if params[:password].empty?
       @user.errors.add(:password, "can't be empty")
-      render 'edit', status: 422
+      render :edit, status: 422
     elsif @user.update(user_params)
       log_in @user
       flash[:success] = "Password has been reset."
       redirect_to @user, status: 303
     else
-      render 'edit', status: 422
+      render :edit, status: 422
     end
-    binding.pry
   end
 
   private
@@ -48,8 +47,7 @@ class PasswordResetsController < ApplicationController
     end
 
     def valid_user
-      unless (@user &&
-              @user.authenticated?(:reset, params[:id]))
+      unless (@user && @user.authenticated?(:reset, params[:id]))
         redirect_to root_url, status: 303
       end
     end
