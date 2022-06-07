@@ -1,0 +1,34 @@
+<nav class="border-bottom m-0" aria-label="breadcrumb">
+  <h1 class="display-5">List Bikes</h5>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li>
+  </ol>
+</nav>
+
+<table class="table table-striped" style="min-height: 500px">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Category</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @bikes.each do |bike| %>
+    <tr>
+      <th scope="row"><%= bike.id %></th>
+      <td><%= bike.name %></td>
+      <td><%= bike.price %></td>
+      <td><%= bike.category.name %></td>
+      <td><%= bike.status %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @bikes, window: 2, theme: 'bootstrap-5',
+                                pagination_class: "d-flex justify-content-center" %>
