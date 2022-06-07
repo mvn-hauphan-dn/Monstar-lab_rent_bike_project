@@ -12,6 +12,6 @@ class ApplicationController < ActionController::Base
     end
 
     def user_layout
-      @current_user.role == "renter" ? "renter_view" : "lessor_view"
+      @current_user.renter? ? "renter_view" : "lessor_view"
     end
 end
