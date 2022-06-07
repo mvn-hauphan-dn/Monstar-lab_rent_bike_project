@@ -30,3 +30,9 @@ Category.create!(name: "Clutch Bike")
 #                price: 1000,
 #                status: 1)
 # end
+
+Admin.create!(name:  "Example User",
+              email: "hauphan@gmail.com",
+              password:              "123456",
+              password_confirmation: "123456",
+              role: 0)
