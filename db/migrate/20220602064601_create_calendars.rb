@@ -3,7 +3,7 @@ class CreateCalendars < ActiveRecord::Migration[7.0]
     create_table :calendars do |t|
       t.date :start_day
       t.date :end_day
-      t.references :bikes, foreign_key: true, index: true
+      t.references :bike, foreign_key: true, index: true
 
       t.timestamps
     end

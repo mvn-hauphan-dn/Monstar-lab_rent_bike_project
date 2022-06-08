@@ -56,25 +56,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
   create_table "bikes", force: :cascade do |t|
     t.float "price"
     t.integer "status"
-    t.bigint "users_id"
-    t.bigint "categories_id"
-    t.bigint "admins_id"
+    t.bigint "user_id"
+    t.bigint "category_id"
+    t.bigint "admin_id"
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admins_id"], name: "index_bikes_on_admins_id"
-    t.index ["categories_id"], name: "index_bikes_on_categories_id"
-    t.index ["users_id"], name: "index_bikes_on_users_id"
+    t.index ["admin_id"], name: "index_bikes_on_admin_id"
+    t.index ["category_id"], name: "index_bikes_on_category_id"
+    t.index ["user_id"], name: "index_bikes_on_user_id"
   end
 
   create_table "calendars", force: :cascade do |t|
     t.date "start_day"
     t.date "end_day"
-    t.bigint "bikes_id"
+    t.bigint "bike_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bikes_id"], name: "index_calendars_on_bikes_id"
+    t.index ["bike_id"], name: "index_calendars_on_bike_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -102,8 +102,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "bikes", "admins", column: "admins_id"
-  add_foreign_key "bikes", "categories", column: "categories_id"
-  add_foreign_key "bikes", "users", column: "users_id"
-  add_foreign_key "calendars", "bikes", column: "bikes_id"
+  add_foreign_key "bikes", "admins"
+  add_foreign_key "bikes", "categories"
+  add_foreign_key "bikes", "users"
+  add_foreign_key "calendars", "bikes"
 end

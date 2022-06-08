@@ -1,6 +1,7 @@
 class BikesController < ApplicationController
   before_action :logged_in_user
-  before_action :load_category, only: :new
+  before_action :load_category
+  before_action :load_statuses
   layout :user_layout
 
   def index
@@ -8,6 +9,7 @@ class BikesController < ApplicationController
   end
 
   def show
+    @bike = Bike.includes(:category, :user).find(params[:id])
   end
 
   def new
@@ -25,12 +27,31 @@ class BikesController < ApplicationController
     end
   end
 
+  def edit
+    @bike = Bike.includes(:category).find(params[:id])
+  end
+
+  def update
+    @bike = Bike.find(params[:id])
+    if @bike.update(bike_params)
+      flash[:success] = "Bike profile updated"
+      redirect_to @bike
+    else
+      render :edit, status: 303
+    end
+  end
+
   private
 
     def bike_params
-      params.require(:bike).permit(:name, :price, :status, :user_id, :category_id, images: [])
+      params.require(:bike).permit(:name, :price, :status, :user_id, :category_id, :description, images: [])
+    end
 
     def load_category
       @categories = Category.all
+    end
+
+    def load_statuses
+      @statuses = Bike.statuses.keys[1..2]
     end
 end

@@ -8,4 +8,8 @@ class Bike < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+
+  def approved
+    update_attribute(:status, 2)
+  end
 end

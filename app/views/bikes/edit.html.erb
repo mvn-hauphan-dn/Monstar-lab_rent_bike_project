@@ -1,5 +1,5 @@
 <nav class="border-bottom m-0" aria-label="breadcrumb">
-  <h1 class="display-5">Add Bike</h5>
+  <h1 class="display-5">Edit Bike</h5>
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="#">Home</a></li>
     <li class="breadcrumb-item"><a href="#">Library</a></li>
@@ -12,10 +12,6 @@
     <div class="col-6" style="min-height: 490px">
       <%= form_with model: @bike do |f| %>
         <div class="mb-4">
-          <%= f.hidden_field :status, value: "pending" %>
-        </div>
-
-        <div class="mb-4">
           <%= f.label :name, class: "form-label" %>
           <%= f.text_field :name, class: "form-control" %>
           <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:name).first %></div>
@@ -25,6 +21,11 @@
           <%= f.label :price, class: "form-label" %>
           <%= f.number_field :price, class: "form-control" %>
           <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:price).first %></div>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :status, class: "form-label" %>
+          <%= f.select :status, @statuses, {}, { class: 'form-select' } %>
         </div>
 
         <div class="mb-4">
@@ -43,7 +44,7 @@
         </div>
 
         <div class="d-flex justify-content-around align-items-center">
-          <%= f.submit "Add Bike", class: "btn btn-primary btn-lg btn-block" %>
+          <%= f.submit "Update", class: "btn btn-primary btn-lg btn-block" %>
         </div>
       <% end %>
     </div>
