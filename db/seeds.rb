@@ -24,11 +24,12 @@ Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
 
 30.times do 
-  Bike.create!(name: "ssssssssss",
-               user_id: 1,
-               category_id: 1,
-               price: 1000,
-               status: 1)
+  Bike.create!(name: Faker::Vehicle.make,
+               user_id: rand(1..2),
+               category_id: rand(1..3),
+               price: rand(1000..10000),
+               status: rand(3),
+               license_plates: Faker::IDNumber.regexify(/\d{2}-[A-Z]{1}\d{1}-\d{5}/))
 end
 
 Admin.create!(name:  "Example User",

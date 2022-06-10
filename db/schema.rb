@@ -61,10 +61,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
     t.bigint "admin_id"
     t.string "name"
     t.string "description"
+    t.string "license_plates"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["admin_id"], name: "index_bikes_on_admin_id"
     t.index ["category_id"], name: "index_bikes_on_category_id"
+    t.index ["license_plates"], name: "index_bikes_on_license_plates", unique: true
     t.index ["user_id"], name: "index_bikes_on_user_id"
   end
 
