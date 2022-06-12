@@ -9,7 +9,7 @@ class BikesController < ApplicationController
   end
 
   def show
-    @bike = Bike.includes(:category, :user).find(params[:id])
+    @bike = Bike.includes(:category, :user, :admin).find(params[:id])
   end
 
   def new

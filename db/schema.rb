@@ -48,9 +48,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
     t.string "password_digest"
     t.string "remember_digest"
     t.integer "role", default: 1
+    t.bigint "root_id", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["root_id"], name: "index_admins_on_root_id"
   end
 
   create_table "bikes", force: :cascade do |t|
@@ -104,6 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "admins", "admins", column: "root_id"
   add_foreign_key "bikes", "admins"
   add_foreign_key "bikes", "categories"
   add_foreign_key "bikes", "users"

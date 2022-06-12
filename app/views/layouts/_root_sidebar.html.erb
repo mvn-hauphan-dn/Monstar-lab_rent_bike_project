@@ -5,13 +5,64 @@
       <%= link_to current_admin.name, '#', class: "nav-link link-dark px-2 bi bi-person" %>
     </div>
     <hr>
-    <ul class="nav flex-column">
-      <li class="nav-item ms-5">
-        <%= link_to ' Home', '#', class: "nav-link link-dark px-2 active bi bi-house-door" %>
-        <%= link_to ' Bikes', admin_bikes_path, class: "nav-link link-dark px-2 active bi bi-bicycle" %>
-        <%= link_to ' Orders', '#', class: "nav-link link-dark px-2 active bi bi-pencil-square" %>
+    <ul class="list-unstyled ps-0 mx-5">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#admin-collapse" aria-expanded="false">
+          <i class="bi bi-person-check"></i> Admins
+        </button>
+        <div class="collapse" id="admin-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'New Admin', new_admin_path, class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'List Admins', admins_path, class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#category-collapse" aria-expanded="false">
+          <i class="bi bi-journal-check"></i> Categories
+        </button>
+        <div class="collapse" id="category-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'New Category', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'List Categories', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
+          <i class="bi bi-person"></i> Orders
+        </button>
+        <div class="collapse" id="user-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'List User', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bike-collapse" aria-expanded="false">
+          <i class="bi bi-bicycle"></i> Bikes
+        </button>
+        <div class="collapse" id="bike-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'List Bike', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#booking-collapse" aria-expanded="false">
+          <i class="bi bi-bookmark-star"></i> Bookings
+        </button>
+        <div class="collapse" id="booking-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'List Booking', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
       </li>
     </ul>
+      
   </div>
   <div class="col-10">
     <header class="py-1 border-bottom bg-light">

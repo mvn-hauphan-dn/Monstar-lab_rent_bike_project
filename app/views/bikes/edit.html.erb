@@ -19,7 +19,7 @@
 
         <div class="mb-4">
           <%= f.label :license_plates, class: "form-label" %>
-          <%= f.number_field :license_plates, class: "form-control" %>
+          <%= f.text_field :license_plates, class: "form-control" %>
           <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:license_plates).first %></div>
         </div>
 

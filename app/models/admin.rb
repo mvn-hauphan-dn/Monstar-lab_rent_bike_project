@@ -1,5 +1,10 @@
 class Admin < ApplicationRecord
   attr_accessor :remember_token
+  has_many :bikes
+  has_many :admin, class_name: "Admin",
+                          foreign_key: "root_id"
+
+  belongs_to :root, class_name: "Admin", optional: true
 
   has_secure_password
 

@@ -7,14 +7,16 @@ Rails.application.routes.draw do
   resources :users
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
-  resources :bikes, except: :delete
-  resources :admins, module: 'admin'
+  resources :bikes, except: :destroy
+  resources :admins, except: :destroy, module: 'admin'
   resources :calendars
   namespace :admin do
+    root 'admins#home'
     get 'login', to: 'sessions#new'
     post 'login', to: 'sessions#create'
     delete 'logout', to: 'sessions#destroy'
     patch 'approve/:id', to: 'bikes#update', as: 'bikes_approve'
-    resources :bikes, except: :delete
+    delete 'destroy/:id', to: 'admins#destroy', as: 'destroy'
+    resources :bikes, except: :destroy
   end
 end

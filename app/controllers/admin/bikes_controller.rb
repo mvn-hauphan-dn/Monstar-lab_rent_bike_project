@@ -8,13 +8,14 @@ class Admin::BikesController < Admin::ApplicationController
   end
 
   def show
-    @bike = Bike.includes(:category, :user).find(params[:id])
+    @bike = Bike.includes(:category, :user, :admin).find(params[:id])
   end
 
   def update
     @bike = Bike.find(params[:id])
-    if @bike
-      @bike.approved 
+    if @bike && @bike.pending?
+      binding.pry
+      @bike.update(status: 2, admin_id: current_admin.id)
       flash.now[:success] = "Bike was approved."
       redirect_to admin_bikes_path, status: 303
     else
@@ -24,11 +25,6 @@ class Admin::BikesController < Admin::ApplicationController
   end
 
   private
-
-    def bike_params
-      params.require(:bike).permit(:name, :price, :status, :user_id, :category_id, :license_plates, images: [])
-    end
-
     def load_category
       @categories = Category.all
     end

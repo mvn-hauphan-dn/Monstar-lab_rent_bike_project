@@ -1,0 +1,36 @@
+<nav class="border-bottom m-0" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li>
+  </ol>
+  <h1 class="display-5">List Admins</h5>
+</nav>
+<%= render 'layouts/message' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Password_digest</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @admins.each do |admin| %>
+    <tr>
+      <th scope="row"><%= admin.id %></th>
+      <td><%= admin.name %></td>
+      <td><%= admin.email %></td>
+      <td><%= admin.password_digest %></td>
+      <td>
+        <%= link_to '', admin_path(admin.id), class: "bi bi-search" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @admins, window: 2, theme: 'bootstrap-5',
+                                pagination_class: "d-flex justify-content-center" %>

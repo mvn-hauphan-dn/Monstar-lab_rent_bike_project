@@ -24,7 +24,7 @@ Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
 
 30.times do 
-  Bike.create!(name: Faker::Vehicle.make,
+  Bike.create!(name: Faker::Vehicle.make+'-'+Faker::Color.color_name+'-'+rand(1000..2022).to_s,
                user_id: rand(1..2),
                category_id: rand(1..3),
                price: rand(1000..10000),
@@ -37,3 +37,13 @@ Admin.create!(name:  "Example User",
               password:              "123456",
               password_confirmation: "123456",
               role: 0)
+Admin.create!(name:  "Example User",
+              email: "hauphan@yasuo.com",
+              password:              "123456",
+              password_confirmation: "123456")
+20.times do
+  Admin.create!(name: Faker::Name.name,
+              email: Faker::Internet.email,
+              password:              "123456",
+              password_confirmation: "123456")
+end
