@@ -12,7 +12,7 @@ class Admin::BikesController < Admin::ApplicationController
 
   def update
     @bike = Bike.find(params[:id])
-    if @bike.update(status: 2)
+    if @bike.available!
       flash[:success] = "Bike was approved."
       redirect_to admin_bikes_path, status: 303
     else

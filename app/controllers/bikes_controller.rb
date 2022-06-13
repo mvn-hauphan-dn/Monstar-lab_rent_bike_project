@@ -1,7 +1,7 @@
 class BikesController < ApplicationController
   before_action :logged_in_user
   before_action :load_category, only: [:new, :edit]
-  before_action :available_bike, only: [:edit, :update]
+  before_action :available_bike, only: [:edit, :update, :show]
   layout :user_layout
 
   def index
@@ -9,7 +9,6 @@ class BikesController < ApplicationController
   end
 
   def show
-    @bike = Bike.find(params[:id])
   end
 
   def new
@@ -32,7 +31,6 @@ class BikesController < ApplicationController
   end
 
   def update
-    @bike = Bike.find(params[:id])
     if @bike.update(update_params)
       flash[:success] = "Bike profile updated"
       redirect_to @bike
@@ -56,7 +54,7 @@ class BikesController < ApplicationController
     end
 
     def available_bike
-      @bike = Bike.find(params[:id])
+      @bike = Bike.where(user_id: current_user.id).find(params[:id])
       redirect_to @bike, status: 303 unless @bike.available?
     end
 end
