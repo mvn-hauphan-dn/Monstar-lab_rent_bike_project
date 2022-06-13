@@ -22,8 +22,8 @@
             <%= image_tag 'logo.png', style:"width:100px; height:100px" %>
             <div class="d-flex justify-content-center my-4">
               <%= link_to 'Edit', edit_admin_category_path(@category.id), class: "btn btn-outline-info ms-1" %>
-              <%= form_with url: "/admin/categories/#{@category.id}", method: :delete do |form| %>
-                <%= form.button "Delete", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-danger ms-1"%>
+              <%= form_with url: admin_category_path(@category.id), method: :delete, data: { turbo_confirm: 'Are you sure?' } do |form| %>
+                <%= form.button "Delete", class: "btn btn-outline-danger ms-1"%>
               <% end %>
             </div>
           </div>

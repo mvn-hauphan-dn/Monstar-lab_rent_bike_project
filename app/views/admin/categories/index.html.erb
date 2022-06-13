@@ -6,7 +6,9 @@
   </ol>
   <h1 class="display-5">List Category</h5>
 </nav>
+
 <%= render 'layouts/message' %>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -16,15 +18,15 @@
     </tr>
   </thead>
   <tbody>
-  <% @categories.each do |category| %>
-    <tr>
-      <th scope="row"><%= category.id %></th>
-      <td><%= category.name %></td>
-      <td>
-        <%= link_to '', admin_category_path(category.id), class: "bi bi-search" %>
-      </td>
-    </tr>
-  <% end %>
+    <% @categories.each do |category| %>
+      <tr>
+        <th scope="row"><%= category.id %></th>
+        <td><%= category.name %></td>
+        <td>
+          <%= link_to '', admin_category_path(category.id), class: "bi bi-search" %>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 

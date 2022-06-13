@@ -6,7 +6,6 @@ class CreateAdmins < ActiveRecord::Migration[7.0]
       t.string :password_digest
       t.string :remember_digest
       t.integer :role, default: 1
-      t.references :root, foreign_key: { to_table: :admins }, default: 1
 
       t.timestamps
     end

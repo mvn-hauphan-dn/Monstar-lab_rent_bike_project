@@ -32,7 +32,7 @@ class Admin::CategoriesController < Admin::ApplicationController
     @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:success] = "Category was updated"
-      redirect_to admin_categories_path, status: 303
+      redirect_to admin_category_path, status: 303
     else
       render :edit, status: 303
     end
