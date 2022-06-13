@@ -21,7 +21,7 @@ class BikesController < ApplicationController
     @bike.user_id = current_user.id
     if @bike.save
       flash[:success] = "Add new bike successfully."
-      redirect_to current_user, status: 303
+      redirect_to bikes_path, status: 303
     else
       render :new, status: 303
     end

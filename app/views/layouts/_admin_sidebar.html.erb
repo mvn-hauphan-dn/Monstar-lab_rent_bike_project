@@ -1,0 +1,67 @@
+<div class="row w-100"> 
+  <div class="col-2 bg-light h-100" style="min-height: 930px">
+    <div class="row justify-content-center items-align-center text-center" style="min-height: 200px">
+      <%= image_tag "logo.png", class:"h-100 w-100 rounded-circle mt-3", style:"max-height: 200px; max-width: 200px" %>
+      <%= link_to current_admin.name, '#', class: "nav-link link-dark px-2 bi bi-person" %>
+    </div>
+    <hr>
+    <ul class="list-unstyled ps-0 mx-5">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#category-collapse" aria-expanded="false">
+          <i class="bi bi-journal-check"></i> Categories
+        </button>
+        <div class="collapse" id="category-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'New Category', new_admin_category_path, class: "bi bi-dot nav-link link-dark rounded" %></li>
+            <li><%= link_to 'List Categories', admin_categories_path, class: "bi bi-dot nav-link link-dark rounded" %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
+          <i class="bi bi-person"></i> Orders
+        </button>
+        <div class="collapse" id="user-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'List User', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#bike-collapse" aria-expanded="false">
+          <i class="bi bi-bicycle"></i> Bikes
+        </button>
+        <div class="collapse" id="bike-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'List Bike', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#booking-collapse" aria-expanded="false">
+          <i class="bi bi-bookmark-star"></i> Bookings
+        </button>
+        <div class="collapse" id="booking-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'List Booking', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+      
+  </div>
+  <div class="col-10">
+    <header class="py-1 border-bottom bg-light">
+      <div class="container d-flex justify-content-end">
+        <ul class="nav">
+          <li><%= link_to " Log out", admin_logout_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "nav-link link-dark bi bi-box-arrow-right" %></li>
+        </ul>
+      </div>
+    </header>
+    <%= yield %> 
+    <%= render 'layouts/footer' %>
+  </div>
+</div>

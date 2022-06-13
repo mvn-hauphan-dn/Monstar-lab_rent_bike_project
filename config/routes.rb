@@ -18,5 +18,6 @@ Rails.application.routes.draw do
     patch 'approve/:id', to: 'bikes#update', as: 'bikes_approve'
     delete 'destroy/:id', to: 'admins#destroy', as: 'destroy'
     resources :bikes, except: :destroy
+    resources :categories
   end
 end

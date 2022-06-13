@@ -19,7 +19,7 @@ class CalendarsController < ApplicationController
     @calendar = Calendar.new(calendar_params)
     if @calendar.save
       flash[:success] = "Add new calendar successfully."
-      redirect_to current_user, status: 303
+      redirect_to calendars_path, status: 303
     else
       render :new, status: 303
     end

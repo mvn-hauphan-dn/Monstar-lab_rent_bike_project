@@ -6,6 +6,7 @@
     <li class="breadcrumb-item active" aria-current="page">Data</li>
   </ol>
 </nav>
+<%= render 'layouts/message' %>
 
 <div id='calendar'></div>
 
@@ -32,7 +33,7 @@
     let obj = {
       title: arr.bike.name,
       start: arr.start_day,
-      end: arr.end_day
+      end: Date.parse(arr.end_day) + 1
     };
     event.push(obj)
   };

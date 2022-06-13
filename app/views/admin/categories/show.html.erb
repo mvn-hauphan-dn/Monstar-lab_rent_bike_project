@@ -1,0 +1,48 @@
+<%= render 'layouts/message' %>
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Admin Profile</li>
+          </ol>
+          <h1 class="display-5">Show Category</h1>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <h5 class="my-3">Action</h5>
+            <%= image_tag 'logo.png', style:"width:100px; height:100px" %>
+            <div class="d-flex justify-content-center my-4">
+              <%= link_to 'Edit', edit_admin_category_path(@category.id), class: "btn btn-outline-info ms-1" %>
+              <%= form_with url: "/admin/categories/#{@category.id}", method: :delete do |form| %>
+                <%= form.button "Delete", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-danger ms-1"%>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @category.name %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
