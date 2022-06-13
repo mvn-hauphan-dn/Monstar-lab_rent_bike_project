@@ -22,3 +22,9 @@ User.create!(name:  "Example User",
 Category.create!(name: "Number Bike")
 Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
+
+Admin.create!(name:  "Example User",
+              email: "hauphan@gmail.com",
+              password:              "123456",
+              password_confirmation: "123456",
+              role: 0)

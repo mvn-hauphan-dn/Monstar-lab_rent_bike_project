@@ -13,7 +13,6 @@ class User < ApplicationRecord
 
   enum role: [:renter, :lessor]
 
-  validates :role, inclusion: { in: %w(renter lessor), message: "%{value} is not a valid" }
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
