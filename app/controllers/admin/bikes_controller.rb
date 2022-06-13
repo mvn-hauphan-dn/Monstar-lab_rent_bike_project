@@ -1,6 +1,5 @@
 class Admin::BikesController < Admin::ApplicationController
   before_action :logged_in_admin
-  before_action :load_category, only: :new
   layout :admin_layout
 
   def index
@@ -8,28 +7,17 @@ class Admin::BikesController < Admin::ApplicationController
   end
 
   def show
-    @bike = Bike.includes(:category, :user).find(params[:id])
+    @bike = Bike.find(params[:id])
   end
 
   def update
     @bike = Bike.find(params[:id])
-    if @bike
-      @bike.approved 
-      flash.now[:success] = "Bike was approved."
+    if @bike.update(status: 2)
+      flash[:success] = "Bike was approved."
       redirect_to admin_bikes_path, status: 303
     else
-      flash.now[:danger] = "Bike not found."
+      flash.now[:danger] = "Bike was not approved."
       render :show, status: 303
     end
   end
-
-  private
-
-    def bike_params
-      params.require(:bike).permit(:name, :price, :category_id, images: [])
-    end
-
-    def load_category
-      @categories = Category.all
-    end
 end

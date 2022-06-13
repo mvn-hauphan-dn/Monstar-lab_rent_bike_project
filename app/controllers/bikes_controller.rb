@@ -1,15 +1,15 @@
 class BikesController < ApplicationController
   before_action :logged_in_user
-  before_action :load_category
-  before_action :load_statuses
+  before_action :load_category, only: [:new, :edit]
+  before_action :available_bike, only: [:edit, :update]
   layout :user_layout
 
   def index
-    @bikes = Bike.includes(:category).page params[:page]
+    @bikes = Bike.where(user_id: current_user.id).includes(:category).page params[:page]
   end
 
   def show
-    @bike = Bike.includes(:category, :user).find(params[:id])
+    @bike = Bike.find(params[:id])
   end
 
   def new
@@ -19,21 +19,21 @@ class BikesController < ApplicationController
   def create
     @bike = Bike.new(bike_params)
     @bike.user_id = current_user.id
+    @bike.status = 'pending'
     if @bike.save
       flash[:success] = "Add new bike successfully."
-      redirect_to current_user, status: 303
+      redirect_to bikes_path, status: 303
     else
       render :new, status: 303
     end
   end
 
   def edit
-    @bike = Bike.includes(:category).find(params[:id])
   end
 
   def update
     @bike = Bike.find(params[:id])
-    if @bike.update(bike_params)
+    if @bike.update(update_params)
       flash[:success] = "Bike profile updated"
       redirect_to @bike
     else
@@ -47,11 +47,16 @@ class BikesController < ApplicationController
       params.require(:bike).permit(:name, :price, :category_id, images: [])
     end
 
+    def update_params
+      params.require(:bike).permit(:description, images: [])
+    end
+
     def load_category
       @categories = Category.all
     end
 
-    def load_statuses
-      @statuses = Bike.statuses.keys[1..2]
+    def available_bike
+      @bike = Bike.find(params[:id])
+      redirect_to @bike, status: 303 unless @bike.available?
     end
 end

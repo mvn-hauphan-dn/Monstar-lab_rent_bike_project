@@ -16,10 +16,7 @@
   </div>
   <div class="col-10">
     <header class="py-1 border-bottom bg-light">
-      <div class="container d-flex justify-content-center align-items-center">
-        <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-          <%= image_tag "logo.png", class: "w-50" %>
-        </a>
+      <div class="container d-flex justify-content-end align-items-center">
         <ul class="nav">
           <li><%= link_to " Log out", logout_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "nav-link link-dark bi bi-box-arrow-right" %></li>
         </ul>
