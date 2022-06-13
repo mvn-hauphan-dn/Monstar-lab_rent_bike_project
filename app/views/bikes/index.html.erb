@@ -7,11 +7,12 @@
   </ol>
 </nav>
 
-<table class="table table-striped" style="min-height: 500px">
+<table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
+      <th scope="col">Image</th>
       <th scope="col">Price</th>
       <th scope="col">Category</th>
       <th scope="col">Status</th>
@@ -22,6 +23,7 @@
     <tr>
       <th scope="row"><%= bike.id %></th>
       <td><%= bike.name %></td>
+      <td><%= bike.images.first.present? ? image_tag(bike.images.first, style:"width:100px; height:100px") : image_tag("bike_default.png", style:"width:100px; height:100px") %></td>
       <td><%= bike.price %></td>
       <td><%= bike.category.name %></td>
       <td><%= bike.status %></td>
