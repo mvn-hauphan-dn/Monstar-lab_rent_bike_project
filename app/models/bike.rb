@@ -11,8 +11,4 @@ class Bike < ApplicationRecord
   validates :license_plates, presence: true, format: { with: /\d{2}-[A-Z]{1}\d{1}-\d{5}/ }
 
   scope :find_by_status_available_correct_user, -> (current_user){ where(status: 'available', user_id: current_user.id) }
-
-  def approved
-    update_attribute(:status, 2)
-  end
 end
