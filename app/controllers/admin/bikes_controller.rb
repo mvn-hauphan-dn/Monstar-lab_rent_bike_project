@@ -26,7 +26,7 @@ class Admin::BikesController < Admin::ApplicationController
   private
 
     def bike_params
-      params.require(:bike).permit(:name, :price, :status, :user_id, :category_id, images: [])
+      params.require(:bike).permit(:name, :price, :category_id, images: [])
     end
 
     def load_category
