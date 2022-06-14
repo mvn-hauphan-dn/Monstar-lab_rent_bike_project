@@ -7,4 +7,79 @@
   </ol>
 </nav>
 
+<%= render 'layouts/message' %>
+
 <div id='calendar'></div>
+
+<script>
+  function myFunction() {
+    const d = new Date();
+    let month = d.getMonth() + 1;
+    let a;
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "calendars?month=" + month,
+      async: false,
+      success: function(resp){
+        a = resp;
+      },
+      error: function () {}
+    });
+    return a;
+  }
+  var event = [];
+  arrs = myFunction();
+  for(arr of arrs.calendars) {
+    let obj = {
+      title: arr.bike.name,
+      start: arr.start_day,
+      end: Date.parse(arr.end_day) + 1
+    };
+    event.push(obj)
+  };
+
+  var calendarEl = document.getElementById('calendar');
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    customButtons: {
+      next: {
+        text: 'Next Month',
+        click: function() {
+          calendar.next();
+          var month = calendar.getDate().getMonth() + 1;
+          $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "calendars?month=" + month,
+            async: false,
+          });
+        }
+      },
+      prev: {
+        text: 'Previous Month',
+        click: function() {
+          calendar.prev();
+          var month = calendar.getDate().getMonth() + 1;
+          $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "calendars?month=" + month,
+            async: false,
+          });
+        }
+      }
+    },
+    initialView: 'dayGridMonth',
+    initialDate: Date.now(),
+    themeSystem: "bootstrap",
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: ''
+    },
+    events: event
+  });
+
+  calendar.render();
+</script>

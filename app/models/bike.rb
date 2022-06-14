@@ -6,7 +6,7 @@ class Bike < ApplicationRecord
 
   enum status: [:pending, :cancel, :available]
 
-  validates :name, presence: true, length: { maximum: 50 }, format: { with: /[A-Z]+-[a-zA-Z]+-\d{4}/ }
+  validates :name, presence: true, format: { with: /[a-zA-Z]+-[a-zA-Z]+-\d{4}/ }
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :license_plates, presence: true, format: { with: /\d{2}-[A-Z]{1}\d{1}-\d{5}/ }
 

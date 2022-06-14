@@ -9,9 +9,9 @@ class Calendar < ApplicationRecord
   scope :load_calendar_by_month, -> (month){ where('EXTRACT(MONTH FROM start_day) = ?', month) }
 
   def rental_period_is_available
-    return unless Calendar.where.not(id: id).where("start_day < ? && ? < end_day", end_day, start_day)
-
-    errors.add(:start_day, "Bike is already booked in this time period")
+    unless Calendar.where("start_day < ? && ? < end_day", end_day, start_day)
+      errors.add(:start_day, "Bike is already booked in this time period")
+    end
   end
 
 end
