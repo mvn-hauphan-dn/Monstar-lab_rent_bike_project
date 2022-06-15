@@ -37,3 +37,13 @@ Admin.create!(name:  "Example User",
               password:              "123456",
               password_confirmation: "123456",
               role: 0)
+Admin.create!(name:  "Example User",
+              email: "hauphan@yasuo.com",
+              password:              "123456",
+              password_confirmation: "123456")
+20.times do
+  Admin.create!(name: Faker::Name.name,
+              email: Faker::Internet.email,
+              password:              "123456",
+              password_confirmation: "123456")
+end

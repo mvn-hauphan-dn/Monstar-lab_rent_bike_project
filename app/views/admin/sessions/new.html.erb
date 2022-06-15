@@ -2,7 +2,7 @@
   <%= form_with url: admin_login_path do |f| %>
     <%= image_tag "logo.png", class: "img-fluid", style:"width:100px; height:100px" %>
     <h1 class="display-5 mb-3 fw-normal">Log in</h1>
-    
+
     <div class="form-floating">
       <%= f.email_field :email, class: "form-control", id: "floatingInput", placeholder: "name@example.com" %>
       <%= f.label :email, for: "floatingInput" %>

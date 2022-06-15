@@ -2,6 +2,7 @@ class Bike < ApplicationRecord
   has_many :calendars, dependent: :destroy
   belongs_to :user
   belongs_to :category
+  belongs_to :admin, optional: true
   has_many_attached :images
 
   enum status: [:pending, :cancel, :available]

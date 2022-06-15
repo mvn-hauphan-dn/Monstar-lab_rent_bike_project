@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'Admins', admins_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">New Admin</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row d-flex align-items-center justify-content-center">
+    <div class="col-6" style="min-height: 490px">
+      <%= form_with model: @admin do |f| %>
+        <div class="mb-4">
+          <%= f.label :name, class: "form-label" %>
+          <%= f.text_field :name, class: "form-control" %>
+          <div class="form-text text-danger"><%= @admin.errors.full_messages_for(:name).first %></div>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :email, class: "form-label" %>
+          <%= f.email_field :email, class: "form-control" %>
+          <div class="form-text text-danger"><%= @admin.errors.full_messages_for(:email).first %></div>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :password, class: "form-label" %>
+          <%= f.password_field :password, class: "form-control" %>
+          <div class="form-text text-danger"><%= @admin.errors.full_messages_for(:password).first %></div>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :password_confirmation, class: "form-label" %>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+          <div class="form-text text-danger"><%= @admin.errors.full_messages_for(:password_confirmation).first %></div>
+        </div>
+
+        <div class="d-flex justify-content-around align-items-center">
+          <%= f.submit "New Admin", class: "btn btn-primary btn-lg btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

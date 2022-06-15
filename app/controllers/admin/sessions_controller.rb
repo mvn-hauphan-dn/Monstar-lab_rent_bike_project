@@ -9,7 +9,7 @@ class Admin::SessionsController < Admin::ApplicationController
     if admin && admin.authenticate(params[:password])
       admin_log_in admin
       params[:remember_me] == '1' ? admin_remember(admin) : admin_forget(admin)
-      redirect_back_or admin
+      redirect_back_or admin_root_path
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render :new, status: 422
