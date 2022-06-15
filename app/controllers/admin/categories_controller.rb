@@ -1,5 +1,6 @@
 class Admin::CategoriesController < Admin::ApplicationController
   before_action :logged_in_admin
+  before_action :load_category, only: [:show, :edit, :update, :destroy]
   layout :admin_layout
 
   def index
@@ -21,15 +22,12 @@ class Admin::CategoriesController < Admin::ApplicationController
   end
 
   def show
-    @category = Category.find(params[:id])
   end
 
   def edit
-    @category = Category.find(params[:id])
   end
 
   def update
-    @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:success] = "Category was updated"
       redirect_to admin_category_path, status: 303
@@ -39,12 +37,16 @@ class Admin::CategoriesController < Admin::ApplicationController
   end
 
   def destroy
-    Category.find(params[:id]).destroy
+    @category.destroy
     flash[:success] = "Category id = #{params[:id]} was delete"
     redirect_to admin_categories_path, status: 303
   end
 
   private
+
+    def load_category
+      @category = Category.find(params[:id])
+    end
 
     def category_params
       params.require(:category).permit(:name)
