@@ -27,14 +27,9 @@ class CalendarsController < ApplicationController
   end
 
   def destroy
-    @calendar = Calendar.find(params[:id])
-    if @calendar.bike.user == @current_user
-      @calendar.destroy
-      flash[:success] = "Calendar was deleted"
-      redirect_to calendars_path, status: 303
-    else
-      flash[:success] = "Calendar wrong"
-      redirect_to calendars_path, status: 303
+    Calendar.joins(:bike).where(bikes: { user_id: @current_user.id }).find(params[:id]).destroy
+    flash[:success] = "Calendar was deleted"
+    redirect_to calendars_path, status: 303
   end
 
   private

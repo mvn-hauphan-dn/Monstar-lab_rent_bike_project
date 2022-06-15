@@ -22,7 +22,7 @@
         Are you sure?
       </div>
       <div class="modal-footer">
-        <button id="confirm" onclick="myFunction()" type="button" class="btn btn-primary">Confirm</button>
+        <button id="confirm" onclick="deleteCalendar()" type="button" class="btn btn-primary">Confirm</button>
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@
     } 
   }
 
-  function myFunction() {
+  function deleteCalendar() {
     var id = document.getElementById("confirm").value;
     $.ajax({
       type: "DELETE",
