@@ -8,6 +8,7 @@ class CreateBikes < ActiveRecord::Migration[7.0]
       t.references :admin, foreign_key: true, index: true
       t.string :name
       t.string :description 
+      t.string :license_plates, index: { unique: true }
 
       t.timestamps
     end

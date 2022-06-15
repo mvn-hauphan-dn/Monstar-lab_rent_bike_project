@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">Add New Time</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row d-flex align-items-center justify-content-center">
+    <div class="col-6" style="min-height: 490px">
+      <%= form_with model: @calendar do |f| %>
+        <div class="mb-4">
+          <%= f.label :bike_id, class: "form-label" %>
+          <%= f.collection_select :bike_id, @bikes, :id, :name, {}, { class: 'form-select' } %>
+        </div>
+        
+        <div class="mb-4">
+          <%= f.label :start_day, class: "form-label" %>
+          <%= f.date_field :start_day, class: "form-control", id: "datepicker1" %>
+          <div class="form-text text-danger"><%= @calendar.errors.full_messages_for(:start_day).first %></div>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :end_day, class: "form-label" %>
+          <%= f.date_field :end_day, class: "form-control", id: "datepicker2" %>
+          <div class="form-text text-danger"><%= @calendar.errors.full_messages_for(:end_day).first %></div>
+        </div>
+
+        <div class="d-flex justify-content-around align-items-center">
+          <%= f.submit "Add Calendar", class: "btn btn-primary btn-lg btn-block" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

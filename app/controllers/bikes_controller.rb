@@ -1,11 +1,16 @@
 class BikesController < ApplicationController
   before_action :logged_in_user
-  before_action :load_category, only: [:new, :edit]
-  before_action :available_bike, only: [:edit, :update, :show]
+  before_action :load_category, only: [:new, :edit, :index]
+  before_action :load_status, only: :index
+  before_action :available_bike, only: [:edit, :update]
+  before_action :correct_bike, only: :show
   layout :user_layout
 
   def index
-    @bikes = Bike.where(user_id: current_user.id).includes(:category).page params[:page]
+    @bikes = Bike.where(user_id: current_user.id).search_by_name_or_license_plates(params[:search])
+                                                 .search_by_category(params[:category_id])
+                                                 .search_by_status(params[:status])
+                                                 .includes(:category).page params[:page]
   end
 
   def show
@@ -41,8 +46,12 @@ class BikesController < ApplicationController
 
   private
 
+    def search_params
+      params.permit(:search, :category_id, :status)
+    end
+
     def bike_params
-      params.require(:bike).permit(:name, :price, :category_id, images: [])
+      params.require(:bike).permit(:name, :price, :description, :license_plates, images: [])
     end
 
     def update_params
@@ -53,8 +62,15 @@ class BikesController < ApplicationController
       @categories = Category.all
     end
 
-    def available_bike
+    def load_status
+      @status = Bike.statuses
+    end
+
+    def correct_bike
       @bike = Bike.where(user_id: current_user.id).find(params[:id])
-      redirect_to @bike, status: 303 unless @bike.available?
+    end
+
+    def available_bike
+      @bike = Bike.where(user_id: current_user.id, status: 2).find(params[:id])
     end
 end
