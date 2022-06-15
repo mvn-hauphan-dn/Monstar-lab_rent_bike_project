@@ -1,10 +1,11 @@
 class CalendarsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :destroy
   before_action :logged_in_user
   before_action :load_bike
   layout :user_layout
 
   def index
-    @calendars = Calendar.load_calendar_by_month(params[:month]).includes(:bike).as_json(include: :bike)
+    @calendars = Calendar.joins(:bike).where(bikes: { user_id: @current_user.id }).load_calendar_by_month(params[:month], params[:year]).includes(:bike).as_json(include: :bike)
     respond_to do |format|
       format.html
       format.json { render json: { calendars: @calendars } }
@@ -25,6 +26,12 @@ class CalendarsController < ApplicationController
     end
   end
 
+  def destroy
+    Calendar.joins(:bike).where(bikes: { user_id: @current_user.id }).find(params[:id]).destroy
+    flash[:success] = "Calendar was deleted"
+    redirect_to calendars_path, status: 303
+  end
+
   private
 
     def calendar_params
@@ -32,6 +39,10 @@ class CalendarsController < ApplicationController
     end
 
     def load_bike
-      @bikes = Bike.find_by_status_available_correct_user(@current_user)
+      bikes = Bike.find_by_status_available_correct_user(@current_user)
+      @bikes = bikes.map do |bike|
+                 bike.name = bike.name + ' | ' + bike.license_plates
+                 bike
+               end
     end
 end

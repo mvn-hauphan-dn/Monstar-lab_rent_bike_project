@@ -1,13 +1,31 @@
-<nav class="border-bottom m-0" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-  <h1 class="display-5">List Bikes</h5>
-</nav>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">List Bikes</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 <%= render 'layouts/message' %>
-
+<%= form_with url: bikes_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
+  <div class="col-12">
+    <div class="input-group">
+      <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
+    </div>
+  </div>
+  <div class="col-12">
+    <%= form.collection_select :category_id, @categories, :id, :name, { prompt: '--Category--' }, { class: "form-select" } %>
+  </div>
+  <div class="col-12">
+    <%= form.select :status, @status, { prompt: '--Status--' }, { class: "form-select" } %>
+  </div>
+  <div class="col-12">
+    <%= form.submit "Search", class: "btn btn-primary" %>
+  </div>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>

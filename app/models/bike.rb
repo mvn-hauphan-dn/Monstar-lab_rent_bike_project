@@ -12,4 +12,7 @@ class Bike < ApplicationRecord
   validates :license_plates, presence: true, format: { with: /\d{2}-[A-Z]{1}\d{1}-\d{5}/ }, uniqueness: true
 
   scope :find_by_status_available_correct_user, -> (current_user){ where(status: 'available', user_id: current_user.id) }
+  scope :search_by_name_or_license_plates, -> (params_search){ where('name LIKE ? OR license_plates LIKE ?', "%#{params_search}%", "%#{params_search}%") if params_search.present? }
+  scope :search_by_category, -> (params_category){ where(category_id: params_category) if params_category.present? } 
+  scope :search_by_status, -> (params_status){ where(status: params_status) if params_status.present? } 
 end

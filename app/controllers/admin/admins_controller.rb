@@ -1,6 +1,7 @@
 class Admin::AdminsController < Admin::ApplicationController
   before_action :logged_in_admin
-  before_action :root_admin, except: [:home]
+  before_action :root_admin, except: :home
+  before_action :find_admin, only: [:show, :edit, :update, :destroy]
   layout :admin_layout
 
   def home
@@ -25,15 +26,12 @@ class Admin::AdminsController < Admin::ApplicationController
   end
 
   def show
-    @admin = Admin.find(params[:id])
   end
 
   def edit
-    @admin = Admin.find(params[:id])
   end
 
   def update
-    @admin = Admin.find(params[:id])
     if @admin.update(admin_params)
       flash[:success] = "Admin profile updated"
       redirect_to @admin
@@ -43,13 +41,9 @@ class Admin::AdminsController < Admin::ApplicationController
   end
 
   def destroy
-    @admin = Admin.find(params[:id])
-    if @admin.destroy
-      flash[:success] = "Admin id = #{params[:id]} was delete"
-      redirect_to admins_path, status: 303
-    else
-      render admins_path, status: 303
-    end
+    @admin.destroy
+    flash[:success] = "Admin id = #{params[:id]} was delete"
+    redirect_to admins_path, status: 303
   end
 
   private
@@ -59,6 +53,10 @@ class Admin::AdminsController < Admin::ApplicationController
     end
 
     def root_admin
-      redirect_to admins_url, status: 303 unless current_admin.root?
+      redirect_to admin_root_path, status: 303 unless current_admin.root?
+    end
+
+    def find_admin
+      @admin = Admin.find(params[:id])
     end
 end

@@ -1,56 +1,19 @@
-<nav class="border-bottom m-0" aria-label="breadcrumb">
-  <h1 class="display-5">Add Bike</h5>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
+<% provide(:button_text, 'Add bike') %>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">Add New Bike</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 <div class="container">
   <div class="row d-flex align-items-center justify-content-center">
     <div class="col-6" style="min-height: 490px">
-      <%= form_with model: @bike do |f| %>
-        <div class="mb-4">
-          <%= f.hidden_field :status, value: "pending" %>
-        </div>
-
-        <div class="mb-4">
-          <%= f.label :name, class: "form-label" %>
-          <%= f.text_field :name, class: "form-control" %>
-          <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:name).first %></div>
-        </div>
-
-        <div class="mb-4">
-          <%= f.label :license_plates, class: "form-label" %>
-          <%= f.text_field :license_plates, class: "form-control" %>
-          <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:license_plates).first %></div>
-        </div>
-
-        <div class="mb-4">
-          <%= f.label :price, class: "form-label" %>
-          <%= f.number_field :price, class: "form-control" %>
-          <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:price).first %></div>
-        </div>
-
-        <div class="mb-4">
-          <%= f.label :category_id, class: "form-label" %>
-          <%= f.collection_select :category_id, @categories, :id, :name, {}, { class: 'form-select' } %>
-        </div>
-
-        <div class="mb-4">
-          <%= f.label :description, class: "form-label" %>
-          <%= f.text_area :description, class: "form-control" %>
-        </div>
-
-        <div class="mb-4">
-          <%= f.label :images, class: "form-label" %>
-          <%= f.file_field :images, multiple: true %>
-        </div>
-
-        <div class="d-flex justify-content-around align-items-center">
-          <%= f.submit "Add Bike", class: "btn btn-primary btn-lg btn-block" %>
-        </div>
-      <% end %>
+      <%= render 'form' %>
     </div>
   </div>
 </div>
