@@ -24,7 +24,7 @@ Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
 
 30.times do 
-  Bike.create!(name: Faker::Vehicle.model + "-" + Faker::Color.color_name + "-" + rand(1000..2022).to_s,
+  Bike.create!(name: Faker::Vehicle.make+'-'+Faker::Color.color_name+'-'+rand(1000..2022).to_s,
                user_id: rand(1..2),
                category_id: rand(1..3),
                price: rand(1000..10000),

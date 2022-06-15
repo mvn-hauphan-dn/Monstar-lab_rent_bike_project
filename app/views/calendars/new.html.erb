@@ -1,11 +1,14 @@
-<nav class="border-bottom m-0" aria-label="breadcrumb">
-  <h1 class="display-5">Add Bike</h5>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">Add New Time</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
 <div class="container">
   <div class="row d-flex align-items-center justify-content-center">

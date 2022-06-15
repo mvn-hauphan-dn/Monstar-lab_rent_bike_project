@@ -1,58 +1,111 @@
-<nav class="border-bottom m-0" aria-label="breadcrumb">
-  <h1 class="display-5">List Bikes</h5>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
 <%= render 'layouts/message' %>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button id="confirm" onclick="myFunction()" type="button" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id='calendar'></div>
 
 <script>
-  function myFunction() {
-    const d = new Date();
-    let month = d.getMonth() + 1;
-    let a;
-    $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: "calendars?month=" + month,
-      async: false,
-      success: function(resp){
-        a = resp;
-      },
-      error: function () {}
-    });
-    return a;
+  var event_today = [];
+  var d = new Date();
+  var month_today = d.getMonth() + 1;
+  var year_today = d.getFullYear();
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "calendars?month=" + month_today + "&year=" + year_today,
+    async: false,
+    success: function(resp){
+      for(arr of resp.calendars) {
+        var obj_today = {
+          id: arr.id,
+          title: arr.bike.name,
+          start: arr.start_day,
+          end: Date.parse(arr.end_day) + 1
+        };
+        event_today.push(obj_today)
+      };
+    }
+  });
+
+  function clear() {
+    var eventSources = calendar.getEventSources(); 
+    var len = eventSources.length;
+    for (var i = 0; i < len; i++) { 
+        eventSources[i].remove(); 
+    } 
   }
-  var event = [];
-  arrs = myFunction();
-  for(arr of arrs.calendars) {
-    let obj = {
-      title: arr.bike.name,
-      start: arr.start_day,
-      end: Date.parse(arr.end_day) + 1
-    };
-    event.push(obj)
-  };
+
+  function myFunction() {
+    var id = document.getElementById("confirm").value;
+    $.ajax({
+      type: "DELETE",
+      dataType: "json",
+      url: "calendars/" + id,
+      async: false,
+      success: window.location.replace("http://127.0.0.1:3000/calendars")
+    });
+  }
 
   var calendarEl = document.getElementById('calendar');
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
+    eventClick: function(info) {
+      info.el.style.borderColor = 'red';
+      document.getElementById("confirm").value = info.event.id;
+      $('#exampleModal').modal('show', 'keyboard', focus);
+    },
     customButtons: {
       next: {
         text: 'Next Month',
         click: function() {
           calendar.next();
-          var month = calendar.getDate().getMonth() + 1;
+          clear();
+          var month_next = calendar.getDate().getMonth() + 1;
+          var year_next =  calendar.getDate().getFullYear();
           $.ajax({
             type: "GET",
             dataType: "json",
-            url: "calendars?month=" + month,
+            url: "calendars?month=" + month_next + "&year=" + year_next,
             async: false,
+            success: function(resp){
+              var event_next = [];
+              for(arr of resp.calendars) {
+                var obj_next = {
+                  id: arr.id,
+                  title: arr.bike.name,
+                  start: arr.start_day,
+                  end: Date.parse(arr.end_day) + 1
+                };
+                event_next.push(obj_next);
+              };
+              calendar.addEventSource( event_next )
+            }
           });
         }
       },
@@ -60,12 +113,27 @@
         text: 'Previous Month',
         click: function() {
           calendar.prev();
-          var month = calendar.getDate().getMonth() + 1;
+          clear();
+          var month_prev = calendar.getDate().getMonth() + 1;
+          var year_prev =  calendar.getDate().getFullYear();
           $.ajax({
             type: "GET",
             dataType: "json",
-            url: "calendars?month=" + month,
+            url: "calendars?month=" + month_prev + "&year=" + year_prev,
             async: false,
+            success: function(resp){
+              var event_prev = [];
+              for(arr of resp.calendars) {
+                var obj_prev = {
+                  id: arr.id,
+                  title: arr.bike.name,
+                  start: arr.start_day,
+                  end: Date.parse(arr.end_day) + 1
+                };
+                event_prev.push(obj_prev);
+              };
+              calendar.addEventSource( event_prev )
+            }
           });
         }
       }
@@ -74,11 +142,11 @@
     initialDate: Date.now(),
     themeSystem: "bootstrap",
     headerToolbar: {
-      left: 'prev,next today',
+      left: 'prev,next',
       center: 'title',
       right: ''
     },
-    events: event
+    events: event_today
   });
 
   calendar.render();
