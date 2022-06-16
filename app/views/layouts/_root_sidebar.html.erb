@@ -30,7 +30,7 @@
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
-          <i class="bi bi-person"></i> Orders
+          <i class="bi bi-person"></i> User
         </button>
         <div class="collapse" id="user-collapse" style="">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -45,7 +45,7 @@
         </button>
         <div class="collapse" id="bike-collapse" style="">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><%= link_to 'List Bike', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'List Bike', admin_bikes_path, class: "bi bi-dot nav-link link-dark rounded " %></li>
             <li><%= link_to 'History', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
           </ul>
         </div>

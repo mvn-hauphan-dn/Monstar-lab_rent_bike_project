@@ -24,6 +24,7 @@
             <% end %>
             <div class="d-flex justify-content-center my-4">
               <%= link_to_if @bike.available?, 'Update', edit_bike_path(@bike.id), class: "btn btn-outline-primary ms-1" %>
+              <%= link_to_if @bike.available?, 'Cancel', cancel_path(@bike.id), data: { turbo_method: :patch, turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-danger ms-1" %>
             </div>
           </div>
         </div>

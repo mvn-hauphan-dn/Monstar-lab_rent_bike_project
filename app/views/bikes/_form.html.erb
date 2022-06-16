@@ -6,6 +6,12 @@
   </div>
 
   <div class="mb-4">
+    <%= f.label :license_plates, class: "form-label" %>
+    <%= f.text_field :license_plates, class: "form-control", readonly: params[:id].present? %>
+    <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:license_plates).first %></div>
+  </div>
+
+  <div class="mb-4">
     <%= f.label :price, class: "form-label" %>
     <%= f.number_field :price, class: "form-control", readonly: params[:id].present? %>
     <div class="form-text text-danger"><%= @bike.errors.full_messages_for(:price).first %></div>
