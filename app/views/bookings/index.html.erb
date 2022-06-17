@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">New Booking</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<%= render 'layouts/message' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Bike</th>
+      <th scope="col">License Plates</th>
+      <th scope="col">Lessor</th>
+      <th scope="col">Start Day</th>
+      <th scope="col">End Day</th>
+      <th scope="col">Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @bookings.each do |booking| %>
+    <tr>
+      <th scope="row"><%= booking.id %></th>
+      <td><%= booking.bike.name %></td>
+      <td><%= booking.bike.license_plates %></td>
+      <td><%= booking.bike.user.name %></td>
+      <td><%= booking.booking_start_day %></td>
+      <td><%= booking.booking_end_day %></td>
+      <td><%= (booking.booking_end_day - booking.booking_start_day) * booking.bike.price %></td>
+      <td>
+        <%= link_to '','#', class: "bi bi-search" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @bookings, window: 2, theme: 'bootstrap-5',
+                                pagination_class: "d-flex justify-content-center" %>

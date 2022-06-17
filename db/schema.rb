@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_17_081024) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
 
   create_table "bikes", force: :cascade do |t|
     t.float "price"
-    t.integer "status"
+    t.integer "status", default: 0
     t.bigint "user_id"
     t.bigint "category_id"
     t.bigint "admin_id"
@@ -68,6 +68,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
     t.index ["category_id"], name: "index_bikes_on_category_id"
     t.index ["license_plates"], name: "index_bikes_on_license_plates", unique: true
     t.index ["user_id"], name: "index_bikes_on_user_id"
+  end
+
+  create_table "booking_statuses", force: :cascade do |t|
+    t.bigint "booking_id"
+    t.bigint "user_id"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_booking_statuses_on_booking_id"
+    t.index ["user_id"], name: "index_booking_statuses_on_user_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "bike_id"
+    t.date "booking_start_day"
+    t.date "booking_end_day"
+    t.string "comment"
+    t.integer "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bike_id"], name: "index_bookings_on_bike_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
   create_table "calendars", force: :cascade do |t|
@@ -107,5 +130,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_06_024950) do
   add_foreign_key "bikes", "admins"
   add_foreign_key "bikes", "categories"
   add_foreign_key "bikes", "users"
+  add_foreign_key "booking_statuses", "bookings"
+  add_foreign_key "booking_statuses", "users"
+  add_foreign_key "bookings", "bikes"
+  add_foreign_key "bookings", "users"
   add_foreign_key "calendars", "bikes"
 end

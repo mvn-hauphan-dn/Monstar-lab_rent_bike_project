@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :bikes, except: :destroy
   resources :admins, except: :destroy, module: 'admin'
-  resources :calendars, except: [:show, :edit, :update]
+  resources :calendars, except: [:show, :edit, :update] 
+  resources :bookings, except: [:destroy, :edit, :update] 
   namespace :admin do
     root 'admins#home'
     get 'login', to: 'sessions#new'

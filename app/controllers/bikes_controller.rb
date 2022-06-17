@@ -23,7 +23,6 @@ class BikesController < ApplicationController
   def create
     @bike = Bike.new(bike_params)
     @bike.user_id = current_user.id
-    @bike.status = 'pending'
     if @bike.save
       flash[:success] = "Add new bike successfully."
       redirect_to bikes_path, status: 303
