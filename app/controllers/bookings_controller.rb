@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :logged_in_user
   before_action :load_bike, only: [:new, :create]
   before_action :user_renter?, only: [:new, :create]
+  before_action :correct_booking, only: :show
   layout :user_layout
 
   def index
@@ -13,7 +14,6 @@ class BookingsController < ApplicationController
   end
 
   def show
-    @booking = Booking.find(params[:id])
     @booking_statuses = BookingStatus.where(booking_id: @booking.id)
   end
 
@@ -37,7 +37,12 @@ class BookingsController < ApplicationController
   private
 
     def user_renter?
-      @current_user.renter?
+      redirect_to bookings_path unless @current_user.renter?
+    end
+
+    def correct_booking
+      @booking = Booking.find(params[:id])
+      redirect_to bookings_path unless @booking.user_id == @current_user.id
     end
 
     def load_bike

@@ -1,9 +1,10 @@
 class BikesController < ApplicationController
   before_action :logged_in_user
-  before_action :load_category, only: [:new, :edit, :index, :create, :update]
+  before_action :load_category, except: [:show, :cancel]
   before_action :load_status, only: :index
   before_action :available_bike, only: [:edit, :update]
-  before_action :correct_bike, only: :show
+  before_action :correct_bike, only: [:show, :cancel]
+  before_action :user_lessor?, only: [:new, :create]
   layout :user_layout
 
   def index
@@ -44,7 +45,6 @@ class BikesController < ApplicationController
   end
 
   def cancel
-    @bike = Bike.find(params[:id])
     if @bike.cancel!
       flash[:success] = "Bike was cancel."
       redirect_to bike_path, status: 303
@@ -55,6 +55,10 @@ class BikesController < ApplicationController
   end
 
   private
+
+    def user_lessor?
+      redirect_to bikes_path unless @current_user.lessor?
+    end
 
     def bike_params
       params.require(:bike).permit(:name, :category_id, :price, :description, :license_plates, images: [])
