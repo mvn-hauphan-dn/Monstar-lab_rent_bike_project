@@ -4,28 +4,34 @@
       <ol class="breadcrumb mb-0">
         <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
         <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
-        <li class="breadcrumb-item active" aria-current="page">New Booking</li>
+        <li class="breadcrumb-item active" aria-current="page">Search Bike</li>
       </ol>
     </nav>
   </div>
 </div>
+
 <%= render 'layouts/message' %>
-<%= form_with url: new_booking_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
-  <div class="col-12">
-    <div class="input-group">
-      <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
+
+<div class="row d-flex align-items-center justify-content-center">
+  <%= form_with url: new_booking_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |f| %>
+    <div class="col-12">
+      <div class="input-group">
+        <%= f.label :start_day, class: "pt-1 me-2" %>
+        <%= f.date_field :start_day, value: params[:start_day], class: "form-control", id: "datepicker1" %>
+      </div>
     </div>
-  </div>
-  <div class="col-12">
-    <%= form.collection_select :category_id, @categories, :id, :name, { prompt: '--Category--' }, { class: "form-select" } %>
-  </div>
-  <div class="col-12">
-    <%= form.select :status, @status, { prompt: '--Status--' }, { class: "form-select" } %>
-  </div>
-  <div class="col-12">
-    <%= form.submit "Search", class: "btn btn-primary" %>
-  </div>
-<% end %>
+    <div class="col-12">
+      <div class="input-group">
+        <%= f.label :end_day, class: "pt-1 me-2" %>
+        <%= f.date_field :end_day, value: params[:end_day], class: "form-control", id: "datepicker2" %>
+      </div>
+    </div>
+    <div class="col-12">
+      <%= f.submit "Search", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -50,7 +56,12 @@
       <td><%= bike.category.name %></td>
       <td><%= bike.status %></td>
       <td>
-        <%= link_to '', bike_path(bike.id), class: "bi bi-search" %>
+        <%= form_with model: @booking do |f| %>
+          <%= f.hidden_field :booking_start_day, value: params[:start_day] %>
+          <%= f.hidden_field :booking_end_day, value: params[:end_day] %>
+          <%= f.hidden_field :bike_id, value: bike.id %>
+          <%= f.submit "Booking", class: "btn btn-primary" %>
+        <% end %>
       </td>
     </tr>
   <% end %>

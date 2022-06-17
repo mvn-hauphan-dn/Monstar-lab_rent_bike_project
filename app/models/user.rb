@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
   has_many :bikes, dependent: :destroy
+  has_many :bookings, dependent: :destroy
 
   before_save   :downcase_email
   before_create :create_activation_digest

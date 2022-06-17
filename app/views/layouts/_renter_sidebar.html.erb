@@ -1,78 +1,33 @@
-<div class="row"> 
-  <div class="col-2 flex-column bg-secondary p-3" style="min-height: 950px">
-    <div class="row justify-content-center items-align-center" style="min-height: 200px; background-color: gray">
-      <%= image_tag "xe_so.jpg", class: "h-100 w-100 rounded-circle mt-3", style: "max-height: 200px; max-width: 200px" %>
-      <p class="text-center">Renter</p>
+<div class="row w-100"> 
+  <div class="col-2 bg-light h-100" style="min-height: 930px">
+    <div class="row justify-content-center items-align-center text-center" style="min-height: 200px">
+      <%= current_user.avatar.present? ? image_tag(current_user.avatar, class:"h-100 w-100 rounded-circle mt-3", style:"max-height: 200px; max-width: 200px") : image_tag("avatar_default.jpg", class:"h-100 w-100 rounded-circle mt-3", style:"max-height: 200px; max-width: 200px") %>
+      <%= link_to current_user.name, current_user, class: "nav-link link-dark px-2 bi bi-person" %>
     </div>
-  
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="#" class="nav-link link-dark" aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          Home
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Dashboard
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Orders
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          Products
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          Customers
-        </a>
+    <hr>
+    <ul class="list-unstyled ps-0 mx-5">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#booking-collapse" aria-expanded="false">
+          <i class="bi bi-bookmark-star"></i> Bookings
+        </button>
+        <div class="collapse" id="booking-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><%= link_to 'New Booking', new_booking_path, class: "bi bi-dot nav-link link-dark rounded" %></li>
+            <li><%= link_to 'List Booking', bookings_path, class: "bi bi-dot nav-link link-dark rounded" %></li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
   <div class="col-10">
-   <div class="row">
-    <header class="py-1 border-bottom">
-    <div class="container d-flex flex-wrap justify-content-center align-items-center">
-      <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
-        <%= image_tag "logo.png", class: "w-50" %>
-      </a>
-      <ul class="nav">
-      <% if logged_in? %>
-      <li><%= link_to "Users", '#', class: "nav-link link-dark px-2 " %></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Account
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><%= link_to "Profile", '#', class: "dropdown-item" %></li>
-            <li><%= link_to "Settings", '#', class: "dropdown-item" %></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><%= link_to "Log out", logout_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "dropdown-item" %></li>
-          </ul>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to ' Login', login_path, class: "nav-link link-dark px-2 bi bi-box-arrow-in-right" %>
-        </li>
-      <% end %>
-    </ul>
-    </div>
+    <header class="py-1 border-bottom bg-light">
+      <div class="container d-flex justify-content-end align-items-center">
+        <ul class="nav">
+          <li><%= link_to " Log out", logout_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "nav-link link-dark bi bi-box-arrow-right" %></li>
+        </ul>
+      </div>
     </header>
-    </div>
-    <div class="row">
-      <%= render 'layouts/message' %>
-    </div>
-    <div class="row">
-      <%= yield %>
-    </div>
+    <%= yield %> 
+    <%= render 'layouts/footer' %>
   </div>
 </div>
