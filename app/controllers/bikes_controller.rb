@@ -23,7 +23,6 @@ class BikesController < ApplicationController
   def create
     @bike = Bike.new(bike_params)
     @bike.user_id = current_user.id
-    @bike.pending!
     if @bike.save
       flash[:success] = "Add new bike successfully."
       redirect_to bikes_path, status: 303
@@ -50,7 +49,7 @@ class BikesController < ApplicationController
       flash[:success] = "Bike was cancel."
       redirect_to bike_path, status: 303
     else
-      flash.now[:danger] = "Bike can not approved."
+      flash.now[:danger] = "Bike can not cancel."
       render :show, status: 303
     end
   end

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :bikes, except: :destroy
   resources :admins, except: :destroy, module: 'admin'
   resources :calendars, except: [:show, :edit, :update] 
-  resources :bookings, except: :destroy
+  resources :bookings, except: [:destroy, :edit, :update] 
   resources :booking_statuses, only: :create do 
     post 'booking', on: :collection
   end

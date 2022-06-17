@@ -5,10 +5,10 @@ class BookingsController < ApplicationController
   layout :user_layout
 
   def index
-    if @current_user.renter?
-      @bookings = Booking.where(user_id: current_user.id).page(params[:page]) 
+    if @current_user.renter? 
+      @bookings = Booking.where(user_id: current_user.id).includes(:user, bike: :user ).page(params[:page])
     else
-      @bookings = Booking.joins(:bike).where(bikes: { user_id: current_user.id }).page(params[:page])
+      @bookings = Booking.joins(:bike).where(bikes: { user_id: current_user.id }).includes(:user, bike: :user).page(params[:page])
     end
   end
 
@@ -25,7 +25,7 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @booking.user_id = current_user.id
     if @booking.save
-      BookingStatus.create(booking_id: @booking.id, status: 'pending')
+      BookingStatus.create(booking_id: @booking.id, user_id: @current_user.id)
       flash[:success] = "Add new booking successfully."
       redirect_to bookings_path, status: 303
     else
@@ -41,7 +41,7 @@ class BookingsController < ApplicationController
     end
 
     def load_bike
-      @bikes = Bike.search_by_start_day_end_day(params[:start_day], params[:end_day]).search_by_status_available.includes(:category).page params[:page]
+      @bikes = Bike.search_by_start_day_end_day(params[:start_day], params[:end_day]).available.includes(:category).page params[:page]
     end
 
     def booking_params
