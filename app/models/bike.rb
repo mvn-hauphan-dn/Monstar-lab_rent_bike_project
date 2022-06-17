@@ -17,5 +17,4 @@ class Bike < ApplicationRecord
   scope :search_by_category, -> (params_category){ where(category_id: params_category) if params_category.present? } 
   scope :search_by_status, -> (params_status){ where(status: params_status) if params_status.present? } 
   scope :search_by_start_day_end_day, -> (start_day, end_day){ joins(:calendars).where('calendars.start_day <= ? AND calendars.end_day >= ?', start_day, end_day) }
-  scope :search_by_status_available, -> { where(status: 'available') }
 end

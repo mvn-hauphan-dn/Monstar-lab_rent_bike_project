@@ -4,13 +4,13 @@
       <ol class="breadcrumb mb-0">
         <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
         <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
-        <li class="breadcrumb-item active" aria-current="page">New Booking</li>
+        <li class="breadcrumb-item active" aria-current="page">List Bikes</li>
       </ol>
     </nav>
   </div>
 </div>
 <%= render 'layouts/message' %>
-<%= form_with url: new_booking_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
+<%= form_with url: bikes_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
   <div class="col-12">
     <div class="input-group">
       <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
