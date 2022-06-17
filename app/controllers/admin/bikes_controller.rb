@@ -20,9 +20,4 @@ class Admin::BikesController < Admin::ApplicationController
       render :show, status: 303
     end
   end
-
-  private
-    def load_category
-      @categories = Category.all
-    end
 end

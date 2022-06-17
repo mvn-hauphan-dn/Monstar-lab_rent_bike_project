@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: :show
-  before_action :correct_user, only: :show
-  layout :user_layout, only: :show
+  before_action :logged_in_user, only: [:show, :edit, :update]
+  before_action :correct_user, only: [:edit, :update]
+  before_action :load_user, only: [:show, :edit, :update]
+  layout :user_layout, only: [:show, :edit]
 
   def show
   end
@@ -21,10 +22,30 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update 
+    if @user.update(update_params)
+      flash[:success] = "User profile updated"
+      redirect_to @user
+    else
+      render :edit, status: 303
+    end
+  end
+
   private
 
     def user_params
       params.require(:user).permit(:role, :name, :email, :password, :password_confirmation)
+    end
+
+    def load_user
+      @user = User.find(params[:id])
+    end
+
+    def update_params
+      params.require(:user).permit(:role, :name, :email, :password, :password_confirmation, :address, :phone_number, :avatar)
     end
 
     def correct_user

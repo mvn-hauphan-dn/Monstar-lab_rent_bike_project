@@ -12,5 +12,4 @@ class Calendar < ApplicationRecord
 
     errors.add(:start_day, "Bike is already booked in this time period")
   end
-
 end

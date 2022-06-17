@@ -1,6 +1,6 @@
 class BikesController < ApplicationController
   before_action :logged_in_user
-  before_action :load_category, only: [:new, :edit, :index]
+  before_action :load_category, only: [:new, :edit, :index, :create, :update]
   before_action :load_status, only: :index
   before_action :available_bike, only: [:edit, :update]
   before_action :correct_bike, only: :show
@@ -44,14 +44,21 @@ class BikesController < ApplicationController
     end
   end
 
+  def cancel
+    @bike = Bike.find(params[:id])
+    if @bike.cancel!
+      flash[:success] = "Bike was cancel."
+      redirect_to bike_path, status: 303
+    else
+      flash.now[:danger] = "Bike can not cancel."
+      render :show, status: 303
+    end
+  end
+
   private
 
-    def search_params
-      params.permit(:search, :category_id, :status)
-    end
-
     def bike_params
-      params.require(:bike).permit(:name, :price, :description, :license_plates, images: [])
+      params.require(:bike).permit(:name, :category_id, :price, :description, :license_plates, images: [])
     end
 
     def update_params

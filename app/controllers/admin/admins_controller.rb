@@ -52,11 +52,6 @@ class Admin::AdminsController < Admin::ApplicationController
       params.require(:admin).permit(:name, :email, :password, :password_confirmation)
     end
 
-    def correct_admin
-      @admin = Admin.find(params[:id])
-      redirect_to admin_login_path, status: 303 unless current_admin?(@admin)
-    end
-
     def root_admin
       redirect_to admin_root_path, status: 303 unless current_admin.root?
     end
