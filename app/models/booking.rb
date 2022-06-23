@@ -12,9 +12,9 @@ class Booking < ApplicationRecord
   validate :rental_period_is_available, on: :save
 
   scope :order_by_newest, -> { order(updated_at: :desc) }
-  scope :search_by_name_or_license_plates_or_user_name, -> (params_search){ joins(:bike).where('bikes.name LIKE ? OR bikes.license_plates LIKE ?', "%#{params_search}%", "%#{params_search}%") if params_search.present? }
-  scope :search_by_status, -> (params_status){ where(status: params_status) if params_status.present? } 
-  scope :search_by_booking_start_day_booking_end_day, -> (start_day, end_day){ where('booking_start_day <= ? AND booking_end_day >= ? AND ? <= ? AND ? >= ?', start_day, end_day, start_day, end_day, start_day, Time.now) if (start_day.present? && end_day.present?) }
+  scope :filter_by_name_or_license_plates_or_user_name, -> (params_filter){ joins(:bike).where('bikes.name LIKE ? OR bikes.license_plates LIKE ?', "%#{params_filter}%", "%#{params_filter}%") if params_filter.present? }
+  scope :filter_by_status, -> (params_status){ where(status: params_status) if params_status.present? } 
+  scope :filter_by_booking_start_day_booking_end_day, -> (start_day, end_day){ where('booking_start_day <= ? AND booking_end_day >= ? AND ? <= ? AND ? >= ?', start_day, end_day, start_day, end_day, start_day, Time.now) if (start_day.present? && end_day.present?) }
 
   def rental_period_is_available
     return if Booking.where("bike_id = ? AND booking_start_day < ? AND ? < booking_end_day", bike_id, booking_end_day, booking_start_day).blank?

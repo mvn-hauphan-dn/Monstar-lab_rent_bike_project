@@ -14,11 +14,11 @@
 <%= form_with url: admins_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
   <div class="col-12">
     <div class="input-group">
-      <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
+      <%= form.text_field :filter, value: params[:filter], class: 'form-control', placeholder: "Filter" %>
     </div>
   </div>
   <div class="col-12">
-    <%= form.submit "Search", class: "btn btn-primary" %>
+    <%= form.submit "Filter", class: "btn btn-primary" %>
   </div>
 <% end %>
 <table class="table table-striped">

@@ -1,11 +1,14 @@
-<nav class="border-bottom m-0" aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-  <h1 class="display-5">New Category</h1>
-</nav>
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'Categories', admin_categories_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">New Category</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 <div class="container">
   <div class="row d-flex align-items-center justify-content-center">
     <div class="col-6" style="min-height: 490px">
@@ -17,7 +20,7 @@
         </div>
 
         <div class="d-flex justify-content-around align-items-center">
-          <%= f.submit "New Admin", class: "btn btn-primary btn-lg btn-block" %>
+          <%= f.submit "New Category", class: "btn btn-primary btn-lg btn-block" %>
         </div>
       <% end %>
     </div>

@@ -8,10 +8,11 @@ class BikesController < ApplicationController
   layout :user_layout
 
   def index
-    @bikes = Bike.order_by_newest.where(user_id: current_user.id).search_by_name_or_license_plates(params[:search])
-                                                                 .search_by_category(params[:category_id])
-                                                                 .search_by_status(params[:status])
-                                                                 .includes(:category).page params[:page]
+    @bikes = Bike.order_by_newest.where(user_id: current_user.id)
+                                 .filter_by_name_or_license_plates(params[:filter])
+                                 .filter_by_category(params[:category_id])
+                                 .filter_by_status(params[:status])
+                                 .includes(:category).page params[:page]
   end
 
   def show

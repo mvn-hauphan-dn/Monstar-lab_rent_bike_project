@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::ApplicationController
   layout :admin_layout
 
   def index
-    @users = User.search_by_name_or_email(params[:search]).order_by_newest.page params[:page]
+    @users = User.filter_by_name_or_email(params[:filter]).order_by_newest.page params[:page]
   end
 
   def show

@@ -7,9 +7,9 @@ class Admin::BikesController < Admin::ApplicationController
   layout :admin_layout
 
   def index
-    @bikes = Bike.order_by_newest.search_by_name_or_license_plates(params[:search])
-                                 .search_by_category(params[:category_id])
-                                 .search_by_status(params[:status])
+    @bikes = Bike.order_by_newest.filter_by_name_or_license_plates(params[:filter])
+                                 .filter_by_category(params[:category_id])
+                                 .filter_by_status(params[:status])
                                  .includes(:category, :user).page params[:page]
   end
 

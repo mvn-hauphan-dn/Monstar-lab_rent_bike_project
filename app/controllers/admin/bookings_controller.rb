@@ -5,9 +5,9 @@ class Admin::BookingsController < Admin::ApplicationController
 
   def index
     @bookings = Booking.order_by_newest.includes(:user, bike: :user).page(params[:page])
-                                       .search_by_status(params[:status])
-                                       .search_by_name_or_license_plates_or_user_name(params[:search])
-                                       .search_by_booking_start_day_booking_end_day(params[:start_day], params[:end_day])
+                                       .filter_by_status(params[:status])
+                                       .filter_by_name_or_license_plates_or_user_name(params[:filter])
+                                       .filter_by_booking_start_day_booking_end_day(params[:start_day], params[:end_day])
   end
 
   def show

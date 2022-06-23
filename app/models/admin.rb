@@ -12,7 +12,7 @@ class Admin < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   scope :order_by_newest, -> { order(updated_at: :desc) }
-  scope :search_by_name_or_email, -> (params_search){ where('name LIKE ? OR email LIKE ?', "%#{params_search}%", "%#{params_search}%") if params_search.present? }
+  scope :filter_by_name_or_email, -> (params_filter){ where('name LIKE ? OR email LIKE ?', "%#{params_filter}%", "%#{params_filter}%") if params_filter.present? }
 
   def Admin.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :

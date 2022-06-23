@@ -7,31 +7,39 @@ class BookingStatusesController < ApplicationController
   before_action :check_booking_status_pending_or_booking?, only: :cancel
 
   def create
-    BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'cancel')
-    Booking.find(params[:booking_id]).update(status: 'cancel')
-    flash[:success] = "Booking's status was updated to cancel."
-    redirect_to booking_path(params[:booking_id]), status: 303
+    ActiveRecord::Base.transaction do
+      BookingStatus.create!(booking_id: params[:booking_id], user_id: @current_user.id, status: 'cancel')
+      Booking.find(params[:booking_id]).update!(status: 'cancel')
+      flash[:success] = "Booking's status was updated to cancel."
+      redirect_to booking_path(params[:booking_id]), status: 303
+    end
   end
 
   def booking
-    BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'booking')
-    Booking.find(params[:booking_id]).update(status: 'booking')
-    flash[:success] = "Booking's status was updated to booking."
-    redirect_to booking_path(params[:booking_id]), status: 303
+    ActiveRecord::Base.transaction do
+      BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'booking')
+      Booking.find(params[:booking_id]).update(status: 'booking')
+      flash[:success] = "Booking's status was updated to booking."
+      redirect_to booking_path(params[:booking_id]), status: 303
+    end
   end
 
   def cancel
-    BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'cancel')
-    Booking.find(params[:booking_id]).update(status: 'cancel')
-    flash[:success] = "Booking's status was updated to cancel."
-    redirect_to booking_path(params[:booking_id]), status: 303
+    ActiveRecord::Base.transaction do
+      BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'cancel')
+      Booking.find(params[:booking_id]).update(status: 'cancel')
+      flash[:success] = "Booking's status was updated to cancel."
+      redirect_to booking_path(params[:booking_id]), status: 303
+    end
   end
 
   def finished
-    BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'finished')
-    Booking.find(params[:booking_id]).update(status: 'finished')
-    flash[:success] = "Booking's status was updated to finished."
-    redirect_to booking_path(params[:booking_id]), status: 303
+    ActiveRecord::Base.transaction do
+      BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'finished')
+      Booking.find(params[:booking_id]).update(status: 'finished')
+      flash[:success] = "Booking's status was updated to finished."
+      redirect_to booking_path(params[:booking_id]), status: 303
+    end
   end
 
   private
