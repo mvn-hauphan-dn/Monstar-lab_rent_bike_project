@@ -1,0 +1,109 @@
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><%= link_to 'Home', root_path, class: "text-decoration-none" %></li>
+            <li class="breadcrumb-item"><%= link_to 'User', current_user, class: "text-decoration-none" %></li>
+            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <%= render 'layouts/message' %>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <h5 class="my-3">Avatar</h5>
+            <%= @user.avatar.present? ? image_tag(@user.avatar, style:"width:100px; height:100px") : image_tag("avatar_default.jpg", style:"width:100px; height:100px") %>
+            <div class="d-flex justify-content-center my-4">
+              <%= link_to 'Update', edit_user_path(@user.id), class: "btn btn-outline-primary ms-1" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.name %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.email %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.address %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Phone Number</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @user.phone_number %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h5 class='text-center display-5 text-info'>List Bike</h5>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">License Plates</th>
+      <th scope="col">Lessor</th>
+      <th scope="col">Image</th>
+      <th scope="col">Price</th>
+      <th scope="col">Category</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @bikes.each do |bike| %>
+    <tr>
+      <th scope="row"><%= bike.id %></th>
+      <td><%= bike.name %></td>
+      <td><%= bike.license_plates %></td>
+      <td><%= bike.user.name %></td>
+      <td><%= bike.images.first.present? ? image_tag(bike.images.first, style:"width:100px; height:100px") : image_tag("bike_default.png", style:"width:100px; height:100px") %></td>
+      <td><%= bike.price %></td>
+      <td><%= bike.category.name %></td>
+      <td><%= bike.status %></td>
+      <td>
+        <%= link_to '', admin_bike_path(bike.id), class: "bi bi-search" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @bikes, window: 2, theme: 'bootstrap-5',
+                                pagination_class: "d-flex justify-content-center" %>

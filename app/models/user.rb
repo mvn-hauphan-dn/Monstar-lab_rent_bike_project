@@ -18,6 +18,9 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
+  scope :order_by_newest, -> { order(updated_at: :desc) }
+  scope :search_by_name_or_email, -> (params_search){ where('name LIKE ? OR email LIKE ?', "%#{params_search}%", "%#{params_search}%") if params_search.present? }
+
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost

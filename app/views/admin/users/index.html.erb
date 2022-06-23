@@ -4,14 +4,15 @@
       <ol class="breadcrumb mb-0">
         <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path, class: "text-decoration-none" %></li>
         <li class="breadcrumb-item"><%= link_to 'Admins', admins_path, class: "text-decoration-none" %></li>
-        <li class="breadcrumb-item active" aria-current="page">List Admins</li>
+        <li class="breadcrumb-item active" aria-current="page">List User</li>
       </ol>
     </nav>
   </div>
 </div>
 
 <%= render 'layouts/message' %>
-<%= form_with url: admins_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
+
+<%= form_with url: admin_users_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
   <div class="col-12">
     <div class="input-group">
       <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
@@ -21,6 +22,7 @@
     <%= form.submit "Search", class: "btn btn-primary" %>
   </div>
 <% end %>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -31,18 +33,18 @@
     </tr>
   </thead>
   <tbody>
-  <% @admins.each do |admin| %>
+  <% @users.each do |user| %>
     <tr>
-      <th scope="row"><%= admin.id %></th>
-      <td><%= admin.name %></td>
-      <td><%= admin.email %></td>
+      <th scope="row"><%= user.id %></th>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
       <td>
-        <%= link_to '', admin_path(admin.id), class: "bi bi-search" %>
+        <%= link_to '', admin_user_path(user.id), class: "bi bi-search" %>
       </td>
     </tr>
   <% end %>
   </tbody>
 </table>
 
-<%= paginate @admins, window: 2, theme: 'bootstrap-5',
+<%= paginate @users, window: 2, theme: 'bootstrap-5',
                                 pagination_class: "d-flex justify-content-center" %>

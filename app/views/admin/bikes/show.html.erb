@@ -24,6 +24,29 @@
               <%= link_to_if @bike.pending?, 'Approve', admin_bikes_approve_path(@bike.id), data: { turbo_method: :patch }, class: "btn btn-outline-primary ms-1" %>
             </div>
           </div>
+          <div class="card mb-4 mb-lg-0">
+          <div class="card-body p-0">
+            <h5 class="text-center p-3">Calendar</h5>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Start Day</th>
+                  <th scope="col">End Day</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @bike.calendars.each do |calendar| %>
+                  <tr>
+                    <td><%= calendar.id %></td>
+                    <td><%= calendar.start_day %></td>
+                    <td><%= calendar.end_day %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
         </div>
       </div>
       <div class="col-lg-8">
@@ -106,3 +129,38 @@
     </div>
   </div>
 </section>
+
+<h5 class='text-center display-5 text-info'>History</h5>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Bike</th>
+      <th scope="col">License Plates</th>
+      <th scope="col">Renter</th>
+      <th scope="col">Lessor</th>
+      <th scope="col">Status</th>
+      <th scope="col">Start Day</th>
+      <th scope="col">End Day</th>
+      <th scope="col">Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <th scope="row"><%= booking.id %></th>
+        <td><%= booking.bike.name %></td>
+        <td><%= booking.bike.license_plates %></td>
+        <td><%= booking.user.name %></td>
+        <td><%= booking.bike.user.name %></td>
+        <td><%= booking.status %></td>
+        <td><%= booking.booking_start_day %></td>
+        <td><%= booking.booking_end_day %></td>
+        <td><%= total_price(booking) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @bookings, window: 2, theme: 'bootstrap-5',
+                                pagination_class: "d-flex justify-content-center" %>

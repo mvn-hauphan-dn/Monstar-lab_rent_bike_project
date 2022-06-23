@@ -10,13 +10,32 @@
   </div>
 </div>
 <%= render 'layouts/message' %>
+<%= form_with url: bookings_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
+  <div class="col-12">
+    <div class="input-group">
+      <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
+    </div>
+  </div>
+  <div class="col-12">
+    <%= form.date_field :start_day, value: params[:start_day], class: "form-control", id: "datepicker1" %>
+  </div>
+  <div class="col-12">
+    <%= form.date_field :end_day, value: params[:end_day], class: "form-control", id: "datepicker2" %>
+  </div>
+  <div class="col-12">
+    <%= form.select :status, @status, { prompt: '--Status--' }, { class: "form-select" } %>
+  </div>
+  <div class="col-12">
+    <%= form.submit "Search", class: "btn btn-primary" %>
+  </div>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Bike</th>
       <th scope="col">License Plates</th>
-      <th scope="col">Lessor</th>
+      <th scope="col">Renter</th>
       <th scope="col">Status</th>
       <th scope="col">Start Day</th>
       <th scope="col">End Day</th>
@@ -30,11 +49,11 @@
         <th scope="row"><%= booking.id %></th>
         <td><%= booking.bike.name %></td>
         <td><%= booking.bike.license_plates %></td>
-        <td><%= booking.bike.user.name %></td>
-        <td><%= booking.booking_statuses.last.status if booking.booking_statuses.any? %></td>
+        <td><%= booking.user.name %></td>
+        <td><%= booking.status %></td>
         <td><%= booking.booking_start_day %></td>
         <td><%= booking.booking_end_day %></td>
-        <td><%= (booking.booking_end_day - booking.booking_start_day) * booking.bike.price %></td>
+        <td><%= total_price(booking) %></td>
         <td>
           <%= link_to '', booking_path(booking.id), class: "bi bi-search" %>
         </td>

@@ -8,7 +8,7 @@ class Admin::AdminsController < Admin::ApplicationController
   end
 
   def index
-    @admins = Admin.page params[:page]
+    @admins = Admin.search_by_name_or_email(params[:search]).order_by_newest.page params[:page]
   end
 
   def new

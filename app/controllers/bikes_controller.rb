@@ -8,10 +8,10 @@ class BikesController < ApplicationController
   layout :user_layout
 
   def index
-    @bikes = Bike.where(user_id: current_user.id).search_by_name_or_license_plates(params[:search])
-                                                 .search_by_category(params[:category_id])
-                                                 .search_by_status(params[:status])
-                                                 .includes(:category).page params[:page]
+    @bikes = Bike.order_by_newest.where(user_id: current_user.id).search_by_name_or_license_plates(params[:search])
+                                                                 .search_by_category(params[:category_id])
+                                                                 .search_by_status(params[:status])
+                                                                 .includes(:category).page params[:page]
   end
 
   def show
@@ -55,10 +55,6 @@ class BikesController < ApplicationController
   end
 
   private
-
-    def user_lessor?
-      redirect_to bikes_path unless @current_user.lessor?
-    end
 
     def bike_params
       params.require(:bike).permit(:name, :category_id, :price, :description, :license_plates, images: [])

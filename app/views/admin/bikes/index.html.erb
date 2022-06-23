@@ -7,12 +7,29 @@
   </ol>
 </nav>
 <%= render 'layouts/message' %>
+<%= form_with url: admin_bikes_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
+  <div class="col-12">
+    <div class="input-group">
+      <%= form.text_field :search, value: params[:search], class: 'form-control', placeholder: "Search" %>
+    </div>
+  </div>
+  <div class="col-12">
+    <%= form.collection_select :category_id, @categories, :id, :name, { prompt: '--Category--' }, { class: "form-select" } %>
+  </div>
+  <div class="col-12">
+    <%= form.select :status, @status, { prompt: '--Status--' }, { class: "form-select" } %>
+  </div>
+  <div class="col-12">
+    <%= form.submit "Search", class: "btn btn-primary" %>
+  </div>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">License Plates</th>
+      <th scope="col">Lessor</th>
       <th scope="col">Image</th>
       <th scope="col">Price</th>
       <th scope="col">Category</th>
@@ -26,6 +43,7 @@
       <th scope="row"><%= bike.id %></th>
       <td><%= bike.name %></td>
       <td><%= bike.license_plates %></td>
+      <td><%= bike.user.name %></td>
       <td><%= bike.images.first.present? ? image_tag(bike.images.first, style:"width:100px; height:100px") : image_tag("bike_default.png", style:"width:100px; height:100px") %></td>
       <td><%= bike.price %></td>
       <td><%= bike.category.name %></td>

@@ -32,41 +32,44 @@
   <% end %>
 </div>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">License Plates</th>
-      <th scope="col">Image</th>
-      <th scope="col">Price</th>
-      <th scope="col">Category</th>
-      <th scope="col">Status</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @bikes.each do |bike| %>
-    <tr>
-      <th scope="row"><%= bike.id %></th>
-      <td><%= bike.name %></td>
-      <td><%= bike.license_plates %></td>
-      <td><%= bike.images.first.present? ? image_tag(bike.images.first, style:"width:100px; height:100px") : image_tag("bike_default.png", style:"width:100px; height:100px") %></td>
-      <td><%= bike.price %></td>
-      <td><%= bike.category.name %></td>
-      <td><%= bike.status %></td>
-      <td>
-        <%= form_with model: @booking do |f| %>
-          <%= f.hidden_field :booking_start_day, value: params[:start_day] %>
-          <%= f.hidden_field :booking_end_day, value: params[:end_day] %>
-          <%= f.hidden_field :bike_id, value: bike.id %>
-          <%= f.submit "Booking", class: "btn btn-primary" %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<% if @bikes.blank? %> 
+  <p colspan="7" class="display-5 text-danger text-center"> Not found bike in period! </p>
+<% else %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">License Plates</th>
+        <th scope="col">Image</th>
+        <th scope="col">Price</th>
+        <th scope="col">Category</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bikes.each do |bike| %>
+        <tr>
+          <th scope="row"><%= bike.id %></th>
+          <td><%= bike.name %></td>
+          <td><%= bike.license_plates %></td>
+          <td><%= bike.images.first.present? ? image_tag(bike.images.first, style:"width:100px; height:100px") : image_tag("bike_default.png", style:"width:100px; height:100px") %></td>
+          <td><%= bike.price %></td>
+          <td><%= bike.category.name %></td>
+          <td>
+            <%= form_with model: @booking do |f| %>
+              <%= f.hidden_field :booking_start_day, value: params[:start_day] %>
+              <%= f.hidden_field :booking_end_day, value: params[:end_day] %>
+              <%= f.hidden_field :bike_id, value: bike.id %>
+              <%= f.submit "Booking", class: "btn btn-primary" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @bikes, window: 2, theme: 'bootstrap-5',
+                              pagination_class: "d-flex justify-content-center" %>
+<% end %>
 
-<%= paginate @bikes, window: 2, theme: 'bootstrap-5',
-                                pagination_class: "d-flex justify-content-center" %>
+
