@@ -45,15 +45,15 @@ class BookingStatusesController < ApplicationController
   private
 
     def check_booking_status_pending?
-      redirect_to booking_path(params[:booking_id]) unless Booking.find(params[:booking_id]).booking_statuses.last.pending?
+      redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.pending?
     end
 
     def check_booking_status_booking?
-      redirect_to booking_path(params[:booking_id]) unless Booking.find(params[:booking_id]).booking_statuses.last.booking?
+      redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.booking?
     end
 
     def check_booking_status_pending_or_booking?
       booking = Booking.find(params[:booking_id]).booking_statuses.last
-      redirect_to booking_path(params[:booking_id]) unless (booking.pending? || booking.booking?)
+      redirect_to error_path unless (booking.pending? || booking.booking?)
     end
 end

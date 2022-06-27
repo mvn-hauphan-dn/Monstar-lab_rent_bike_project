@@ -4,7 +4,7 @@ class BikesController < ApplicationController
   before_action :load_status, only: :index
   before_action :available_bike, only: [:edit, :update]
   before_action :correct_bike, only: [:show, :cancel]
-  before_action :user_lessor?, only: [:new, :create]
+  before_action :user_lessor?, only: [:new, :create, :index]
   layout :user_layout
 
   def index

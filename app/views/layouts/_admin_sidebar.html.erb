@@ -19,11 +19,11 @@
       </li>
       <li class="mb-1">
         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
-          <i class="bi bi-person"></i> Orders
+          <i class="bi bi-person"></i> Users
         </button>
         <div class="collapse" id="user-collapse" style="">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><%= link_to 'List User', '#', class: "bi bi-dot nav-link link-dark rounded " %></li>
+            <li><%= link_to 'List User', admin_users_path, class: "bi bi-dot nav-link link-dark rounded " %></li>
           </ul>
         </div>
       </li>

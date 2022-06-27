@@ -16,10 +16,10 @@ class ApplicationController < ActionController::Base
     end
 
     def user_lessor?
-      redirect_to root_path unless @current_user.lessor?
+      redirect_to error_path unless @current_user.lessor?
     end
 
     def user_renter?
-      redirect_to root_path unless @current_user.renter?
+      redirect_to error_path unless @current_user.renter?
     end
 end

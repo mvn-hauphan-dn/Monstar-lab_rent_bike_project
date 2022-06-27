@@ -44,7 +44,7 @@ end
     if @booking.save
       BookingStatus.create(booking_id: @booking.id, user_id: @current_user.id)
       flash[:success] = "Add new booking successfully."
-      redirect_to bookings_path, status: 303
+      redirect_to @booking, status: 303
     else
       flash.now[:danger] = @booking.errors.full_messages.first
       render :new, status: 303

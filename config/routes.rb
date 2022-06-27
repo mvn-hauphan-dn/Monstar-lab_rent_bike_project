@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
+  get 'error', to: 'errors#error'
   get 'help', to: 'static_pages#help'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'

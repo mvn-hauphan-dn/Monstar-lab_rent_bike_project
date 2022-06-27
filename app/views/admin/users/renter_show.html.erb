@@ -19,9 +19,6 @@
           <div class="card-body text-center">
             <h5 class="my-3">Avatar</h5>
             <%= @user.avatar.present? ? image_tag(@user.avatar, style:"width:100px; height:100px") : image_tag("avatar_default.jpg", style:"width:100px; height:100px") %>
-            <div class="d-flex justify-content-center my-4">
-              <%= link_to 'Update', edit_user_path(@user.id), class: "btn btn-outline-primary ms-1" %>
-            </div>
           </div>
         </div>
       </div>

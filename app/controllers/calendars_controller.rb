@@ -28,7 +28,19 @@ class CalendarsController < ApplicationController
   end
 
   def destroy
-    Calendar.joins(:bike).where(bikes: { user_id: @current_user.id }).find(params[:id]).destroy
+    @calendar = Calendar.joins(:bike).where(bikes: { user_id: @current_user.id }).find(params[:id])
+    if Booking.where('booking_start_day >= ? AND booking_end_day <= ? AND bike_id = ?', @calendar.start_day, @calendar.end_day, @calendar.bike_id).blank?
+      @calendar.destroy
+      respond_to do |format|
+        format.html
+        format.json { render json: { message: 'Delete calendar success!' } }
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json { render json: { message: 'Delete fail. Calendar is already booking!' } }
+      end
+   end
   end
 
   private

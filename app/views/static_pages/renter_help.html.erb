@@ -1,0 +1,71 @@
+<p class="text-info text-center display-3"> Hướng Dẫn <p>
+<div class="container mb-3">
+  <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic example">
+    <%= link_to 'Chủ xe', help_path + "?role=lessor", class: "btn btn-success" %>
+    <%= link_to 'Khách thuê', help_path + "?role=renter", class: "btn btn-warning" %>
+  </div>
+</div>
+<div class="container">
+  <div class="list-group w-auto">
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dang_nhap.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %> 
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Đăng Nhập</h6>
+          <p class="mb-0 opacity-75">Đăng nhập vào trang qua Facebook, Google, số điện thoại hoặc email của bạn. Chúng tôi cần bạn xác thực số điện thoại trước khi đặt xe.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dang_nhap.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Tìm Xe</h6>
+          <p class="mb-0 opacity-75">Bạn có thể tìm xe ưng ý nhanh chóng ở nơi bạn muốn tìm, thời gian, hãng xe, đặt xe nhanh.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dang_nhap.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Đặt Xe</h6>
+          <p class="mb-0 opacity-75">Lựa chọn chiếc xe mà bạn ưng ý và gửi Yêu cầu xe đến Chủ xe. Sau đó chủ xe sẽ nhanh chóng phản hồi đến bạn trong thời gian nhanh nhất.
+
+          Nếu bạn không muốn mất nhiều thời gian chờ đợi, có thể lựa chọn chiếc xe khác có tính năng  Đặt xe nhanhđể đặt xe trực tiếp mà không cần thông qua sự phản hồi từ phía Chủ xe.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dat_coc.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Đặt Cọc</h6>
+          <p class="mb-0 opacity-75">Sau khi nhận được sự đồng ý từ chủ xe, khách hàng có thể đặt cọc bằng 3 hình thức chuyển khoản, ví điện tử hoặc tiền mặt.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+    <%= image_tag "nhan_xe.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+    <div class="d-flex gap-2 w-100 justify-content-between">
+      <div>
+        <h6 class="mb-0">Nhận xe</h6>
+        <p class="mb-0 opacity-75">Bạn và chủ xe liên hệ gặp nhau để nhận xe. Ở Mioto, có nhiều chủ xe sẵn sàng đem xe đến tận nơi cho bạn.
+
+        Kiểm tra tình trạng và giấy tờ xe, xuất trình bản gốc các giấy tờ, kí xác nhận biên bản giao xe, nhận chìa khóa và bắt đầu hành trình của bạn.</p>
+      </div>
+    </div>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+  <%= image_tag "tra_xe.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+  <div class="d-flex gap-2 w-100 justify-content-between">
+    <div>
+      <h6 class="mb-0">Trả xe</h6>
+      <p class="mb-0 opacity-75">Sau khi hết thời gian thuê, bạn hoàn trả xe giống như tình trạng và thỏa thuận ban đầu. Kí xác nhận biên bản bàn giao, nhận lại giấy tờ để hoàn thành chuyến đi tuyệt vời của bạn.
+
+      Đừng quên cho điểm rating và nhận xét của bạn đến chủ xe để nâng cao chất lượng phục vụ cho những hành trình sắp tới nhé!</p>
+    </div>
+  </div>
+</a>
+  </div>
+</div>
