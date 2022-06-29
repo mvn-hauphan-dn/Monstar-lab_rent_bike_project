@@ -3,9 +3,9 @@
     <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
       <%= image_tag "logo.png", class: "w-50" %>
     </a>
-    <form class="col-12 col-lg-auto mb-3 mb-lg-0">
-      <input type="search" class="form-control" placeholder="Search ..." aria-label="Search">
-    </form>
+    <div class="col-12 col-lg-auto mb-3 mb-lg-0">
+      <%= image_tag "paypal.png", style: "height: 40px" %>
+    </div>
   </div>
 </header>
 
@@ -21,7 +21,7 @@
         <h1>Do you want to rent a car to someone else?</h1>
         <h4>Become our partner for a chance to earn extra monthly income.</h4>
         <p>
-          <%= link_to 'Guide!', help_path, class: "btn btn-lg btn-primary" %>
+          <%= link_to 'Guide!', help_path + "?role=lessor", class: "btn btn-lg btn-primary" %>
           <%= link_to 'Lessor Register!', new_user_path + '?role=lessor', class: "btn btn-lg btn-success" %>
         </p>
       </div>
@@ -32,7 +32,7 @@
       <h1>Let rent a car from us!</h1>
       <h4>For safe rides with quality cars.</h4>
       <p>
-        <%= link_to 'Guide!', help_path, class: "btn btn-lg btn-primary" %>
+        <%= link_to 'Guide!', help_path + "?role=renter", class: "btn btn-lg btn-primary" %>
         <%= link_to 'Renter Register!', new_user_path + '?role=renter', class: "btn btn-lg btn-success" %>
       </p>
       </div>
@@ -50,14 +50,13 @@
 
 <div class="container marketing mt-4">
   <div class="row">
-    <h4>VEHICLES ON THE PAGE</h4>
+    <h4><i class="bi bi-star-fill"></i> CATEGORY VEHICLES ON THE PAGE</h4>
     <div class="col-lg-4">
       <div class="row justify-content-center">
         <%= image_tag "xe_so.jpg", class: "bd-placeholder-img h-100", style: "max-height: 280px" %>
       </div>
       <h2 class='text-center'>Number Bike</h2>
       <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-      <p><a class="btn btn-secondary" href="#">View details »</a></p>
     </div>
     <div class="col-lg-4">
       <div class="row justify-content-center">
@@ -65,7 +64,6 @@
       </div>
       <h2 class='text-center'>Motor Bike</h2>
       <p>Another exciting bit of representative placeholder content. This time, we have moved on to the second column.</p>
-      <p><a class="btn btn-secondary" href="#">View details »</a></p>
     </div>
     <div class="col-lg-4">
       <div class="row justify-content-center">
@@ -73,10 +71,9 @@
       </div>
       <h2 class='text-center'>Clutch Bike</h2>
       <p>And lastly this, the third column of representative placeholder content.</p>
-      <p><a class="btn btn-secondary" href="#">View details »</a></p>
     </div>
   </div>
-
+  <h4><i class="bi bi-star-fill"></i> SALIENT FEATURES</h4>
   <hr class="featurette-divider">
 
   <div class="row featurette">
@@ -111,5 +108,26 @@
     <div class="col-md-5 d-flex justify-content-end">
       <%= image_tag "thu_tuc2.jpg" %>
     </div>
+  </div>
+</div>
+
+<div class="container">
+  <h4><i class="bi bi-star-fill"></i> NEWEST VIHICLES ON THE PAGE</h4>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <% @bikes.each do |bike| %>
+      <div class="col">
+        <div class="card shadow-sm">
+          <%= image_tag bike.images.first.present? ? bike.images.first : "bike_default.png", class: "bd-placeholder-img card-img-top W-100", style: "max-height: 280px" %>
+          <div class="card-body">
+            <p class="card-text"><%= bike.description %></p>
+            <div class="justify-content-between align-items-center">
+              <h5><%= bike.name %></h5>
+              <h5><%= bike.license_plates %></h5>
+              <h5><%= bike.price %>   $/Day</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

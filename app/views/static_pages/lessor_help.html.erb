@@ -1,0 +1,73 @@
+<p class="text-info text-center display-3"> Hướng Dẫn <p>
+<div class="container mb-3">
+  <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic example">
+    <%= link_to 'Chủ xe', help_path + "?role=lessor", class: "btn btn-success" %>
+    <%= link_to 'Khách thuê', help_path + "?role=renter", class: "btn btn-warning" %>
+  </div>
+</div>
+<div class="container">
+  <div class="list-group w-auto">
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dang_nhap.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %> 
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Đăng Nhập</h6>
+          <p class="mb-0 opacity-75">Đăng nhập vào trang qua Facebook, Google, số điện thoại hoặc email của bạn. Chúng tôi cần bạn xác thực số điện thoại trước khi đặt xe.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dang_nhap.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Đăng Ký Xe</h6>
+          <p class="mb-0 opacity-75">Bạn chỉ cần đưa thông tin, mô tả, hình ảnh xe của bạn lên hệ thống. Cập nhật thời gian, mức giá mong muốn và các yêu cầu khác của bạn đối với khách thuê.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "dang_nhap.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Duyệt Xe</h6>
+          <p class="mb-0 opacity-75">Bạn chỉ cần chờ trong vài phút, hệ thống sẽ kiểm duyệt xe của bạn có đáp ứng đủ hay không yêu cầu cho thuê. Trang sẽ chủ động liện hệ với bạn trong trường hợp có vấn đề phát sinh.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <%= image_tag "nhan_va_phan_hoi.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+      <div class="d-flex gap-2 w-100 justify-content-between">
+        <div>
+          <h6 class="mb-0">Nhận Và Phản Hồi</h6>
+          <p class="mb-0 opacity-75">Khi có khách gửi yêu cầu thuê xe, bạn sẽ nhận được thông báo từ trang. Kiểm tra thông tin cá nhân của khách và xác nhận cho thuê sớm nhất có thể.
+
+          Khi có sự đồng ý cho thuê từ bạn, khách thuê sẽ chuyển tiền đặt cọc để hoàn tất việc đặt xe.</p>
+        </div>
+      </div>
+    </a>
+    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+    <%= image_tag "ban_giao_xe.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+    <div class="d-flex gap-2 w-100 justify-content-between">
+      <div>
+        <h6 class="mb-0">Bàn Giao Xe</h6>
+        <p class="mb-0 opacity-75">ạn và khách thuê liên hệ gặp nhau để bàn giao xe.
+
+        Kiểm tra giấy phép lái xe, các giấy tờ liên quan và tài sản đặt cọc của khách.
+        
+        Kiểm tra xe, kí xác nhận biên bản bàn giao và gửi chìa khóa xe của bạn cho vị khách đáng tin cậy.</p>
+      </div>
+    </div>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+  <%= image_tag "tra_xe.png", class: "rounded-circle flex-shrink-0", style: "height: 50px; width: 50px" %>
+  <div class="d-flex gap-2 w-100 justify-content-between">
+    <div>
+      <h6 class="mb-0">Nhận Xe</h6>
+      <p class="mb-0 opacity-75">Sau khi hết thời gian khách thuê, gặp khách thuê, kiểm tra xe, kí biên bản bàn giao và nhận lại xe của bạn như thỏa thuận ban đầu.
+
+      Đừng quên cho điểm rating khách thuê và gợi ý họ cho điểm bạn trên ứng dụng. Điều này sẽ tăng uy tín của bạn trong cộng đồng thuê xe tự lái.</p>
+    </div>
+  </div>
+</a>
+  </div>
+</div>
