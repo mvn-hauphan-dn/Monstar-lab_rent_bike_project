@@ -68,8 +68,11 @@
       dataType: "json",
       url: "calendars/" + id,
       async: false,
-      success: window.location.replace("http://127.0.0.1:3000/calendars")
-    });
+      success: function(resp){
+        alert(resp.message);
+        location.reload('http://127.0.0.1:3000/calendars')
+      }
+    })
   }
 
   var calendarEl = document.getElementById('calendar');

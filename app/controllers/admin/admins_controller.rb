@@ -8,7 +8,7 @@ class Admin::AdminsController < Admin::ApplicationController
   end
 
   def index
-    @admins = Admin.page params[:page]
+    @admins = Admin.filter_by_name_or_email(params[:filter]).order_by_newest.page params[:page]
   end
 
   def new
@@ -53,7 +53,7 @@ class Admin::AdminsController < Admin::ApplicationController
     end
 
     def root_admin
-      redirect_to admin_root_path, status: 303 unless current_admin.root?
+      redirect_to error_path, status: 303 unless current_admin.root?
     end
 
     def find_admin
