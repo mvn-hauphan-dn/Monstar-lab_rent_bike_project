@@ -4,7 +4,7 @@ class Admin::SessionsController < Admin::ApplicationController
   def new
   end
 
-  def create   
+  def create
     admin = Admin.find_by(email: params[:email].downcase)
     if admin && admin.authenticate(params[:password])
       admin_log_in admin
