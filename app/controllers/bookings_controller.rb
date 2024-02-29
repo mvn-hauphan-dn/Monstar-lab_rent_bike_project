@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
   layout :user_layout
 
   def index
-    if @current_user.renter? 
+    if @current_user.renter?
       @bookings = Booking.where(user_id: current_user.id).includes(:user, bike: :user ).page(params[:page])
     else
       @bookings = Booking.joins(:bike).where(bikes: { user_id: current_user.id }).includes(:user, bike: :user).page(params[:page])

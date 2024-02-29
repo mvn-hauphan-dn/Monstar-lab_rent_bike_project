@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 User.create!(name:  "Example User",
-             email: ENV["USER_EMAIL"],
+             email: Faker::Internet.email,
              password:              "123456",
              password_confirmation: "123456",
              activated_at: Time.zone.now,
@@ -23,7 +23,7 @@ Category.create!(name: "Number Bike")
 Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
 
-30.times do 
+30.times do
   Bike.create!(name: Faker::Vehicle.make+'-'+Faker::Color.color_name+'-'+rand(1000..2022).to_s,
                user_id: rand(1..2),
                category_id: rand(1..3),

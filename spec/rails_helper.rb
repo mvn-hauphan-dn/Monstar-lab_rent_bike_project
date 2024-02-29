@@ -1,7 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 require "support/factory_bot"
-require 'pundit/rspec'
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
@@ -75,6 +74,8 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.render_views = true
 end
 
 # Configuration for shoulda-matchers gem
