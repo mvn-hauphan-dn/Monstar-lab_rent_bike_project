@@ -97,5 +97,4 @@ group :test do
   gem 'webdrivers'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 5.0'
-
 end
