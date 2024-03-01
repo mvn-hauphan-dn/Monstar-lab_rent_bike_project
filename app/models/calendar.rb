@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: calendars
+#
+#  id         :bigint           not null, primary key
+#  end_day    :date
+#  start_day  :date
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  bike_id    :bigint
+#
+# Indexes
+#
+#  index_calendars_on_bike_id  (bike_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (bike_id => bikes.id)
+#
 class Calendar < ApplicationRecord
   belongs_to :bike
 

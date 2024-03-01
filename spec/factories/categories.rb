@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: categories
@@ -7,8 +9,8 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Category < ApplicationRecord
-  has_many :bikes, dependent: :destroy
-
-  validates :name, presence: true
+FactoryBot.define do
+  factory :category do
+    name { Faker::Vehicle.model }
+  end
 end
