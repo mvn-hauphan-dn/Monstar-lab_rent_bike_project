@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::SessionsController' do
-  include Admin::SessionsHelper
+  include AuthenticationSpecHelper
 
   before do
     @controller = Admin::SessionsController.new
@@ -13,11 +13,13 @@ RSpec.describe 'Admin::SessionsController' do
     context 'with valid credentials' do
       it 'logs in the admin' do
         post :create, params: { email: admin.email, password: admin.password }
+
         expect(session[:admin_id]).to eq(admin.id)
       end
 
       it 'sets the remember cookie if `remember_me` is checked' do
         post :create, params: { email: admin.email, password: admin.password, remember_me: '1' }
+
         expect(cookies.permanent.signed[:admin_id]).to eq(admin.id)
       end
 
@@ -43,7 +45,7 @@ RSpec.describe 'Admin::SessionsController' do
     let(:admin) { create(:admin) }
 
     before do
-      admin_log_in(admin)
+      login_as(admin)
       delete :destroy
     end
 

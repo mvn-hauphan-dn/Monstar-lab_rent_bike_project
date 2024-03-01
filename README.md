@@ -23,5 +23,7 @@ Things you may want to cover:
 
 * To run RSpec, you can use the following command:
 - `bundle exec rspec [path/to/spec_file.rb]`
+- For example, to run all file in the spec folder
+  `bundle exec rspec`
 - For example, to run the sessions_controller_spec.rb file in the spec/controllers/admin directory:
   `bundle exec rspec spec/controllers/admin/sessions_controller_spec.rb`
