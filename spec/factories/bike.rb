@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :bike do
-    name { Faker::Vehicle.model }
-    price { Faker::Number.between(from: 50, to: 500) }
-    license_plates { Faker::Vehicle.license_plate }
+    name { "#{Faker::Lorem.word}-#{Faker::Lorem.word}-#{Faker::Number.number(digits: 4)}" }
+    price { Faker::Number.between(from: 0, to: 500) }
+    license_plates { '12-A1-12345' }
     status { :available }
     association :user
     association :category
