@@ -13,6 +13,8 @@ Things you may want to cover:
 
 * Database creation
 
+- rails db:seed_fu
+
 * Database initialization
 
 * How to run the test suite

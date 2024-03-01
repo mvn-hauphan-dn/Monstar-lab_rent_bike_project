@@ -80,6 +80,9 @@ group :development, :test do
 end
 
 group :development do
+  # Annotate ActiveRecord models [https://github.com/ctran/annotate_models]
+  gem "annotate"
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
@@ -91,6 +94,8 @@ group :development do
 end
 
 group :test do
+  gem 'shoulda-matchers', '~> 5.0'
+
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
