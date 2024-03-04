@@ -13,7 +13,7 @@ User.create!(name: Faker::Name.name,
              activated_at: Time.zone.now,
              role: 1)
 
-9.times do 
+9.times do
   count += 1
   User.create!(name: Faker::Name.name,
              email: "hauphan#{count}@gmail.com",
@@ -29,8 +29,8 @@ User.create!(name:  Faker::Name.name,
              password_confirmation: "123456",
              activated_at: Time.zone.now,
              role: 0)
-            
-9.times do 
+
+9.times do
   count += 1
   User.create!(name: Faker::Name.name,
               email: "hauphan#{count}@gmail.com",
@@ -45,7 +45,7 @@ Category.create!(name: "Number Bike")
 Category.create!(name: "Motor Bike")
 Category.create!(name: "Clutch Bike")
 
-50.times do 
+50.times do
   Bike.create!(name: Faker::Vehicle.make+'-'+Faker::Color.color_name+'-'+rand(1000..2022).to_s,
                user_id: rand(1..5),
                category_id: rand(1..3),

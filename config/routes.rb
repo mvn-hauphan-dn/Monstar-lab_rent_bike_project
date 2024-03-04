@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :bikes, except: :destroy
   resources :admins, except: :destroy, module: 'admin'
-  resources :calendars, except: [:show, :edit, :update] 
-  resources :bookings, except: [:destroy, :edit] 
-  resources :booking_statuses, only: :create do 
+  resources :calendars, except: [:show, :edit, :update]
+  resources :bookings, except: [:destroy, :edit]
+  resources :booking_statuses, only: :create do
     post 'booking', on: :collection
     post 'cancel', on: :collection
     post 'payment', on: :collection
