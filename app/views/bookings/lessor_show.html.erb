@@ -37,7 +37,7 @@
                 <% end %>
               <% end %>
 
-              <% if @booking.booking_statuses.last.booking? %>
+              <% if @booking.booking_statuses.last.payment? %>
                 <%= form_with url: finished_booking_statuses_path, method: :post, data: { turbo_confirm: 'Are you sure?' } do |form| %>
                   <%= form.hidden_field :booking_id, value: @booking.id %>
                   <%= form.button "Finished", class: "btn btn-outline-success ms-1"%>

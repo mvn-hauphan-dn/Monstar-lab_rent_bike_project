@@ -1,9 +1,11 @@
 class BookingStatusesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :payment
   before_action :logged_in_user
-  before_action :user_lessor?, except: :create
-  before_action :user_renter?, only: :create
+  before_action :user_lessor?, except: [:create, :payment]
+  before_action :user_renter?, only: [:create, :payment]
   before_action :check_booking_status_pending?, only: [:booking, :create]
-  before_action :check_booking_status_booking?, only: :finished
+  before_action :check_booking_status_booking?, only: :payment
+  before_action :check_booking_status_payment?, only: :finished
   before_action :check_booking_status_pending_or_booking?, only: :cancel
 
   def create
@@ -33,6 +35,15 @@ class BookingStatusesController < ApplicationController
     end
   end
 
+  def payment
+    ActiveRecord::Base.transaction do
+      BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'payment')
+      Booking.find(params[:booking_id]).update(status: 'payment')
+      flash[:success] = "Booking's status was updated to payment."
+      redirect_to booking_path(params[:booking_id]), status: 303
+    end
+  end
+
   def finished
     ActiveRecord::Base.transaction do
       BookingStatus.create(booking_id: params[:booking_id], user_id: @current_user.id, status: 'finished')
@@ -50,6 +61,10 @@ class BookingStatusesController < ApplicationController
 
     def check_booking_status_booking?
       redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.booking?
+    end
+
+    def check_booking_status_payment?
+      redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.payment?
     end
 
     def check_booking_status_pending_or_booking?

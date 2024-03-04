@@ -29,6 +29,10 @@
                   <%= form.button "Cancel", class: "btn btn-outline-danger ms-1"%>
                 <% end %>
               <% end %>
+
+              <% if @booking.booking_statuses.last.booking? %>
+                <div id="paypal-button-container"></div>
+              <% end %>
             </div>
           </div>
           <div class="card mb-4 mb-lg-0">
@@ -265,3 +269,36 @@
     color: gold;
   }
 </style>
+
+<script src="https://www.paypal.com/sdk/js?client-id=Ae736ptQuIbc7Q4yxK4Xfa7KtZv6rVoSR4dKPe6QBbo_ZMZPhtoiSmYU_KUDkM992-dzo6BVeIAKftS-"></script>
+
+<script>
+  var value = <%= total_price(@booking) %>;
+  var id = <%= @booking.id %>;
+  paypal.Buttons({
+    createOrder: function (data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: value
+          }
+        }]
+      });
+    },
+    onApprove: function (data, actions) {
+      $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: 'http://127.0.0.1:3000/booking_statuses/payment',
+        data: { booking_id: id },
+        async: false,
+        success: function (){
+        }
+      });
+      return actions.order.capture().then(function(details) {
+        alert("Thanh toán thành công!");
+        location.reload("http://127.0.0.1:3000/bookings/" + id);
+      });
+    }
+  }).render('#paypal-button-container');
+</script>

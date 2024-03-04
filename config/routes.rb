@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :booking_statuses, only: :create do
     post 'booking', on: :collection
     post 'cancel', on: :collection
+    post 'payment', on: :collection
     post 'finished', on: :collection
   end
   namespace :admin do
