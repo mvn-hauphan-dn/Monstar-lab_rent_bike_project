@@ -7,6 +7,7 @@
 #  booking_start_day :date
 #  comment           :string
 #  rating            :integer
+#  status            :integer          default("pending")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  bike_id           :bigint
