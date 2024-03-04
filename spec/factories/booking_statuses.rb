@@ -19,9 +19,12 @@
 #  fk_rails_...  (booking_id => bookings.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class BookingStatus < ApplicationRecord
-  belongs_to :booking
-  belongs_to :user
+# spec/factories/booking_statuses.rb
 
-  enum status: [:pending, :booking, :cancel, :finished]
+FactoryBot.define do
+  factory :booking_status do
+    association :booking
+    association :user
+    status { BookingStatus.statuses.keys.sample }
+  end
 end

@@ -7,7 +7,7 @@ class BookingsController < ApplicationController
   layout :user_layout
 
   def index
-    if @current_user.renter? 
+    if @current_user.renter?
       @bookings = Booking.order_by_newest.where(user_id: current_user.id)
                                          .includes(bike: :user).page(params[:page])
                                          .filter_by_status(params[:status])
@@ -25,7 +25,7 @@ end
 end
 
   def show
-    if @current_user.renter? 
+    if @current_user.renter?
       @booking = Booking.where(user_id: current_user.id).find(params[:id])
       render action: "renter_show"
     else
@@ -60,7 +60,7 @@ end
 
     def load_bike
       if params[:start_day].present? && params[:end_day].present?
-        @bikes = Bike.filter_by_start_day_end_day(params[:start_day], params[:end_day]).available.includes(:category).page params[:page] 
+        @bikes = Bike.filter_by_start_day_end_day(params[:start_day], params[:end_day]).available.includes(:category).page params[:page]
       end
     end
 

@@ -19,9 +19,15 @@
 #  fk_rails_...  (booking_id => bookings.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class BookingStatus < ApplicationRecord
-  belongs_to :booking
-  belongs_to :user
+require 'rails_helper'
 
-  enum status: [:pending, :booking, :cancel, :finished]
+RSpec.describe BookingStatus do
+  describe 'associations' do
+    it { should belong_to(:booking) }
+    it { should belong_to(:user) }
+  end
+
+  describe 'enums' do
+    it { should define_enum_for(:status).with_values(pending: 0, booking: 1, cancel: 2, finish: 3) }
+  end
 end
