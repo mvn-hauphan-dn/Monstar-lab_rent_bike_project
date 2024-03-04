@@ -1,0 +1,148 @@
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path, class: "text-decoration-none" %></li>
+            <li class="breadcrumb-item"><%= link_to 'Bookings', admin_bookings_path, class: "text-decoration-none" %></li>
+            <li class="breadcrumb-item active" aria-current="page">Booking Information</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <%= render 'layouts/message' %>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <h5 class="my-3">Bike Images</h5>
+            <% @booking.bike.images.each do |image| %>
+              <%= image_tag image, style:"width:100px; height:100px" %>
+            <% end %>
+          </div>
+          <div class="card mb-4 mb-lg-0">
+          <div class="card-body p-0">
+          <h5 class="text-center p-3">List Status</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Timestamps</th>
+                <th scope="col">User</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @booking.booking_statuses.each do |booking| %>
+                <tr>
+                  <td><%= booking.created_at.strftime("%F | %T") %></td>
+                  <td><%= booking.user.name %></td>
+                  <td><%= booking.status %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Bike</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.bike.name %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">License Plates</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.bike.license_plates %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Renter</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.user.name %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Lessor</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.bike.user.name %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Start Day</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.booking_start_day %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">End Day</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.booking_end_day %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Rating</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.rating %> <% if @booking.rating.present? %> <i class="bi bi-star"></i> <% end %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Comment</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.comment %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Bike Price</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= @booking.bike.price %></p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Total Price</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"><%= total_price(@booking) %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -14,4 +14,12 @@ class ApplicationController < ActionController::Base
     def user_layout
       @current_user.renter? ? "renter_view" : "lessor_view"
     end
+
+    def user_lessor?
+      redirect_to error_path unless @current_user.lessor?
+    end
+
+    def user_renter?
+      redirect_to error_path unless @current_user.renter?
+    end
 end

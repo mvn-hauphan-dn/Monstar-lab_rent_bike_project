@@ -23,6 +23,6 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out if logged_in?
-    redirect_to root_url, status: 303
+    redirect_to root_path, status: 303
   end
 end

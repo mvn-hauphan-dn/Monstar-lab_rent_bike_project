@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col">
+    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><%= link_to 'Home', admin_root_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item"><%= link_to 'Users', admin_users_path, class: "text-decoration-none" %></li>
+        <li class="breadcrumb-item active" aria-current="page">List User</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<%= render 'layouts/message' %>
+
+<%= form_with url: admin_users_path, method: :get, class: "row row-cols-lg-auto g-3 align-items-center" do |form| %>
+  <div class="col-12">
+    <div class="input-group">
+      <%= form.text_field :filter, value: params[:filter], class: 'form-control', placeholder: "Filter" %>
+    </div>
+  </div>
+  <div class="col-12">
+    <%= form.submit "Filter", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+    <tr>
+      <th scope="row"><%= user.id %></th>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td>
+        <%= link_to '', admin_user_path(user.id), class: "bi bi-search" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users, window: 2, theme: 'bootstrap-5',
+                                pagination_class: "d-flex justify-content-center" %>

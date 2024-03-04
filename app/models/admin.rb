@@ -28,6 +28,9 @@ class Admin < ApplicationRecord
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
+  scope :order_by_newest, -> { order(updated_at: :desc) }
+  scope :filter_by_name_or_email, -> (params_filter){ where('name LIKE ? OR email LIKE ?', "%#{params_filter}%", "%#{params_filter}%") if params_filter.present? }
+
   def Admin.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
