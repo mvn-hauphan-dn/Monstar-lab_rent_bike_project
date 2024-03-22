@@ -1,61 +1,58 @@
-name: CI
-
-on: [push]
-
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false # continue running the test on other instances even if there is failing test on one of the instance
-      matrix:
-        # Set N number of parallel jobs you want to run tests on.
-        # Use higher number if you have slow tests to split them on more parallel jobs.
-        # Remember to update ci_node_index below to 0..N-1
-        ci_node_total: [4]
-        # set N-1 indexes for parallel jobs
-        # When you run 2 parallel jobs then first job will have index 0, the second job will have index 1 etc
-        ci_node_index: [0, 1, 2, 3]
-
     services:
       postgres:
-        image: postgres:15
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_USER: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        image: postgres:11-alpine
         ports:
-          - 5432:5432
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: ".ruby-version"
-          bundler-cache: true
-
-      - name: Setup databases
-          run: |
-            bin/rails db:setup RAILS_ENV=test
-
-      - name: Make bin/ci executable
-        run: chmod +x ./bin/ci
-
-      - name: Run Rspec test
-        id: rspec-test
+          - "5432:5432"
         env:
-          # Specifies how many jobs you would like to run in parallel,
-          # used for partitioning
-          CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
-          # Use the index from matrix as an environment variable
-          CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-        continue-on-error: true
-        run : |
-          ./bin/ci
+          POSTGRES_DB: rails_test
+          POSTGRES_USER: rails
+          POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      # Add or replace dependency steps here
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          bundler-cache: true
+      # Add or replace database setup steps here
+      - name: Set up database schema
+        run: bin/rails db:schema:load
+      # Add or replace test runners here
+      - name: Run tests
+        run: bin/rake
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        with:
+          bundler-cache: true
+      # Add or replace any other lints here
+      - name: Security audit dependencies
+        run: bundle exec bundle audit --update
+      - name: Security audit application code
+        run: bundle exec brakeman -q -w2
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
