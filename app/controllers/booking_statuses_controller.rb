@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class BookingStatusesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :payment
   before_action :logged_in_user
-  before_action :user_lessor?, except: [:create, :payment]
-  before_action :user_renter?, only: [:create, :payment]
-  before_action :check_booking_status_pending?, only: [:booking, :create]
+  before_action :user_lessor?, except: %i[create payment]
+  before_action :user_renter?, only: %i[create payment]
+  before_action :check_booking_status_pending?, only: %i[booking create]
   before_action :check_booking_status_booking?, only: :payment
   before_action :check_booking_status_payment?, only: :finished
   before_action :check_booking_status_pending_or_booking?, only: :cancel
@@ -55,20 +57,20 @@ class BookingStatusesController < ApplicationController
 
   private
 
-    def check_booking_status_pending?
-      redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.pending?
-    end
+  def check_booking_status_pending?
+    redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.pending?
+  end
 
-    def check_booking_status_booking?
-      redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.booking?
-    end
+  def check_booking_status_booking?
+    redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.booking?
+  end
 
-    def check_booking_status_payment?
-      redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.payment?
-    end
+  def check_booking_status_payment?
+    redirect_to error_path unless Booking.find(params[:booking_id]).booking_statuses.last.payment?
+  end
 
-    def check_booking_status_pending_or_booking?
-      booking = Booking.find(params[:booking_id]).booking_statuses.last
-      redirect_to error_path unless (booking.pending? || booking.booking?)
-    end
+  def check_booking_status_pending_or_booking?
+    booking = Booking.find(params[:booking_id]).booking_statuses.last
+    redirect_to error_path unless booking.pending? || booking.booking?
+  end
 end

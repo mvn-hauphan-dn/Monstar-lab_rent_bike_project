@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root 'static_pages#home'
   get 'error', to: 'errors#error'
@@ -8,11 +10,11 @@ Rails.application.routes.draw do
   patch 'cancel/:id', to: 'bikes#cancel', as: 'cancel'
   resources :users
   resources :account_activations, only: [:edit]
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :password_resets, only: %i[new create edit update]
   resources :bikes, except: :destroy
   resources :admins, except: :destroy, module: 'admin'
-  resources :calendars, except: [:show, :edit, :update]
-  resources :bookings, except: [:destroy, :edit]
+  resources :calendars, except: %i[show edit update]
+  resources :bookings, except: %i[destroy edit]
   resources :booking_statuses, only: :create do
     post 'booking', on: :collection
     post 'cancel', on: :collection
@@ -28,7 +30,7 @@ Rails.application.routes.draw do
     delete 'destroy/:id', to: 'admins#destroy', as: 'destroy'
     resources :bikes, except: :destroy
     resources :categories
-    resources :bookings, only: [:index, :show]
-    resources :users, only: [:index, :show]
+    resources :bookings, only: %i[index show]
+    resources :users, only: %i[index show]
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: bikes
@@ -23,11 +25,10 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (admin_id => admins.id)
+#  fk_rails_...  (admin_id => admin_users.id)
 #  fk_rails_...  (category_id => categories.id)
 #  fk_rails_...  (user_id => users.id)
 #
-# spec/factories/bike.rb
 
 FactoryBot.define do
   factory :bike do

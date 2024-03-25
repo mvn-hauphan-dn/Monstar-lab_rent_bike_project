@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
-# Table name: admins
+# Table name: admin_users
 #
 #  id              :bigint           not null, primary key
 #  email           :string
@@ -13,12 +15,11 @@
 #
 # Indexes
 #
-#  index_admins_on_email  (email) UNIQUE
+#  index_admin_users_on_email  (email) UNIQUE
 #
-# spec/factories/admins.rb
 
 FactoryBot.define do
-  factory :admin do
+  factory :admin_user do
     name { Faker::Name.name }
     email { Faker::Internet.email }
     password { 'password' }
