@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBikes < ActiveRecord::Migration[7.0]
   def change
     create_table :bikes do |t|
@@ -7,7 +9,7 @@ class CreateBikes < ActiveRecord::Migration[7.0]
       t.references :category, foreign_key: true, index: true
       t.references :admin, foreign_key: true, index: true
       t.string :name
-      t.string :description 
+      t.string :description
       t.string :license_plates, index: { unique: true }
 
       t.timestamps

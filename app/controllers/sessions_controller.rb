@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     user = User.find_by(email: params[:email].downcase)
-    if user && user.authenticate(params[:password])
+    if user&.authenticate(params[:password])
       if user.activated?
         log_in user
         params[:remember_me] == '1' ? remember(user) : forget(user)
         redirect_back_or user
       else
-        message  = "Account not activated. "
-        message += "Check your email for the activation link."
+        message  = 'Account not activated. '
+        message += 'Check your email for the activation link.'
         flash[:warning] = message
         redirect_to root_url, status: 303
       end

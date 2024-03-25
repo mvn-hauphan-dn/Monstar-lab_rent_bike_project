@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Admin::BikesController' do
@@ -7,7 +9,7 @@ RSpec.describe 'Admin::BikesController' do
     @controller = Admin::BikesController.new
   end
 
-  describe "GET #show" do
+  describe 'GET #show' do
     let(:admin) { create(:admin) }
     let(:bike) { create(:bike) }
 
@@ -15,14 +17,14 @@ RSpec.describe 'Admin::BikesController' do
       login_as(admin)
     end
 
-    it "assigns the requested bike to @bike" do
+    it 'assigns the requested bike to @bike' do
       get :show, params: { id: bike.id }
       expect(assigns(:bike)).to eq(bike)
     end
 
-    it "renders the show template" do
+    it 'renders the show template' do
       get :show, params: { id: bike.id }
-      expect(response).to render_template("show")
+      expect(response).to render_template('show')
     end
   end
 

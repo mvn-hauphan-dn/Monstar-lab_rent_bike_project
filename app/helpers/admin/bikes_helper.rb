@@ -1,2 +1,6 @@
-module Admin::BikesHelper
+# frozen_string_literal: true
+
+module Admin
+  module BikesHelper
+  end
 end

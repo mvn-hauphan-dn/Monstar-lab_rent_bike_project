@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: booking_statuses
@@ -23,5 +25,5 @@ class BookingStatus < ApplicationRecord
   belongs_to :booking
   belongs_to :user
 
-  enum status: [:pending, :booking, :cancel, :payment, :finished]
+  enum status: %i[pending booking cancel payment finished]
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: bookings
@@ -28,7 +30,7 @@ class Booking < ApplicationRecord
   belongs_to :user
   has_many :booking_statuses
 
-  enum status: [:pending, :booking, :cancel, :payment, :finished]
+  enum status: %i[pending booking cancel payment finished]
 
   validates :rating, numericality: { in: 1..5 }, allow_nil: true
   validates :comment, length: { maximum: 255 }
@@ -37,13 +39,22 @@ class Booking < ApplicationRecord
   validate :rental_period_is_available, on: :create
 
   scope :order_by_newest, -> { order(updated_at: :desc) }
-  scope :filter_by_name_or_license_plates_or_user_name, -> (params_filter){ joins(:bike).where('bikes.name LIKE ? OR bikes.license_plates LIKE ?', "%#{params_filter}%", "%#{params_filter}%") if params_filter.present? }
-  scope :filter_by_status, -> (params_status){ where(status: params_status) if params_status.present? } 
-  scope :filter_by_booking_start_day_booking_end_day, -> (start_day, end_day){ where('booking_start_day <= ? AND booking_end_day >= ? AND ? <= ? AND ? >= ?', start_day, end_day, start_day, end_day, start_day, Time.now) if (start_day.present? && end_day.present?) }
+  scope :filter_by_name_or_license_plates_or_user_name, lambda { |params_filter|
+                                                          if params_filter.present?
+                                                            joins(:bike).where('bikes.name LIKE ? OR bikes.license_plates LIKE ?', "%#{params_filter}%", "%#{params_filter}%")
+                                                          end
+                                                        }
+  scope :filter_by_status, ->(params_status) { where(status: params_status) if params_status.present? }
+  scope :filter_by_booking_start_day_booking_end_day, lambda { |start_day, end_day|
+                                                        if start_day.present? && end_day.present?
+                                                          where('booking_start_day <= ? AND booking_end_day >= ? AND ? <= ? AND ? >= ?', start_day, end_day, start_day, end_day, start_day, Time.now)
+                                                        end
+                                                      }
 
   def rental_period_is_available
-    return if Booking.where("bike_id = ? AND booking_start_day <= ? AND ? <= booking_end_day", bike_id, booking_end_day, booking_start_day).blank?
+    return if Booking.where('bike_id = ? AND booking_start_day <= ? AND ? <= booking_end_day', bike_id,
+                            booking_end_day, booking_start_day).blank?
 
-    errors.add(:booking_start_day, "is already booked in this time period")
+    errors.add(:booking_start_day, 'is already booked in this time period')
   end
 end

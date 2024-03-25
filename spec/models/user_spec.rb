@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -60,10 +62,11 @@ RSpec.describe User do
   #############
 
   describe 'enums' do
-    it { should define_enum_for(:role).with_values([
-        :renter,
-        :lessor
-      ])
+    it {
+      should define_enum_for(:role).with_values(%i[
+                                                  renter
+                                                  lessor
+                                                ])
     }
   end
 end
