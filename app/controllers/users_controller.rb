@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:role, :name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
   def load_user
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   end
 
   def update_params
-    params.require(:user).permit(:role, :name, :email, :password, :password_confirmation, :address, :phone_number,
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :address, :phone_number,
                                  :avatar)
   end
 
