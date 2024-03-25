@@ -7,7 +7,7 @@ module Admin
     def new; end
 
     def create
-      admin = Admin.find_by(email: params[:email].downcase)
+      admin = AdminUser.find_by(email: params[:email].downcase)
       if admin&.authenticate(params[:password])
         admin_log_in admin
         params[:remember_me] == '1' ? admin_remember(admin) : admin_forget(admin)

@@ -49,8 +49,8 @@ class AdminUser < ApplicationRecord
   end
 
   def remember
-    self.remember_token = Admin.new_token
-    update_attribute(:remember_digest, Admin.digest(remember_token))
+    self.remember_token = AdminUser.new_token
+    update_attribute(:remember_digest, AdminUser.digest(remember_token))
   end
 
   def forget

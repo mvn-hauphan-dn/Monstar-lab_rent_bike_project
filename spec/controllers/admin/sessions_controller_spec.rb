@@ -10,7 +10,7 @@ RSpec.describe 'Admin::SessionsController' do
   end
 
   describe 'POST #create' do
-    let(:admin) { create(:admin) } # Assuming you have a factory for creating admins
+    let(:admin) { create(:admin_user) } # Assuming you have a factory for creating admins
 
     context 'with valid credentials' do
       it 'logs in the admin' do
@@ -44,7 +44,7 @@ RSpec.describe 'Admin::SessionsController' do
   end
 
   describe 'DELETE #destroy' do
-    let(:admin) { create(:admin) }
+    let(:admin) { create(:admin_user) }
 
     before do
       login_as(admin)
