@@ -29,13 +29,29 @@ RSpec.describe 'UsersController' do
     end
 
     it "create a user successfully" do
-      post :create, params: { user:{name: Faker::Name.name, email: "alone.hht@gmail.com", password: user.password,password_confirmation: user.password, activated_at: Time.zone.now, role: user.role}} 
+      post :create, params: { user: {
+          name: Faker::Name.name, 
+          email: "alone.hht@gmail.com", 
+          password: user.password,
+          password_confirmation: user.password,
+          activated_at: Time.zone.now,
+          role: user.role
+        }
+      } 
 
       expect(response).to have_http_status(303)
     end
 
     it "fail to create a user" do
-      post :create, params: { user:{name: Faker::Name.name, email: "test", password: user.password,password_confirmation: user.password_confirmation, activated_at: Time.zone.now, role: user.role}}
+      post :create, params: { user: {
+          name: Faker::Name.name, 
+          email: "testEmail", 
+          password: user.password,
+          password_confirmation: user.password,
+          activated_at: Time.zone.now,
+          role: user.role
+        }
+      } 
 
       expect(response).to have_http_status(422)
     end
