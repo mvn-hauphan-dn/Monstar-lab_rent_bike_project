@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "UsersController" do
-include AuthenticationSpecHelper
+RSpec.describe 'UsersController' do
+  include AuthenticationSpecHelper
   before do
     @controller = UsersController.new
   end
 
-  describe 'GET #new' do   
-    context 'Render template new' do
+  describe 'GET #new' do
+    context 'When call `new`' do
       it 'renders the `new` template' do
         get :new
         expect(response).to render_template('new')
@@ -15,19 +17,19 @@ include AuthenticationSpecHelper
     end
   end
 
-  describe 'POST #create' do  
+  describe 'POST #create' do
     let(:valid_user_params) do
-    {
-      name: 'valid_name',
-      email: 'valid_email@example.com',
-      password: 'valid_password',
-      password_confirmation: 'valid_password',
-      role: :renter ,
-      phone_number: '12345678'
-    }
+      {
+        name: 'valid_name',
+        email: 'valid_email@example.com',
+        password: 'valid_password',
+        password_confirmation: 'valid_password',
+        role: :renter,
+        phone_number: '12345678'
+      }
     end
 
-    context 'create with valid user' do
+    context 'when create with valid user' do
       it 'create a new user' do
         expect { post(:create, params: { user: valid_user_params }) }.to change(User, :count).by(1)
         expect(flash[:info]).to eq('Please check your email to activate your account.')
@@ -36,41 +38,25 @@ include AuthenticationSpecHelper
       end
     end
 
-    context 'create with invalid user' do
-      it 'case name, email is nil' do
-        post :create, params: { user: attributes_for(:user, email: nil, name: nil) }
-        expect(response).to render_template('new')
+    context 'when create with invalid user' do
+      shared_examples 'return error' do |description, invalid_user_params|
+        let(:response) { post :create, params: { user: attributes_for(:user, invalid_user_params) } }
+        context description.to_s do
+          it { expect(response).to have_http_status(422) }
+          it { expect { response }.to_not change(User, :count) }
+          it { expect(response).to render_template('new') }
+        end
       end
 
-      it 'case email has wrong format' do
-        post :create, params: { user: attributes_for(:user, email: "invalid_email") }
-        expect(response).to have_http_status(422)
+      it_behaves_like 'return error', 'with email nil', { email: nil }
+      it_behaves_like 'return error', 'with name nil', { name: nil }
+      it_behaves_like 'return error', 'with email email has wrong format', { email: 'invalid_email' }
+      it_behaves_like 'return error', 'with duplicate emails', { email: 'example@email.com' } do
+        let!(:user) { create(:user, email: 'example@email.com') }
       end
-
-      it "case duplicate emails" do
-        user = create(:user, email: "example@email.com")
-        expect {
-          post :create, params: { user: attributes_for(:user, email: "example@email.com") }
-        }.to_not change(User, :count)
-      end
-
-      it "case password length less than 6" do
-        expect {
-          post :create, params: { user: attributes_for(:user, password:1234) }
-        }.to_not change(User, :count)
-      end
-
-      it "case name length greater than 50" do
-        expect {
-          post :create, params: { user: attributes_for(:user, name:Faker::Lorem.characters(number: 60)) }
-        }.to_not change(User, :count)
-      end
-
-      it "case email length greater than 255" do
-        expect {
-          post :create, params: { user: attributes_for(:user, email:Faker::Lorem.characters(number: 256) + "@example.com") }
-        }.to_not change(User, :count)
-      end
+      it_behaves_like 'return error', 'with password length less than 6', { password: 1234 }
+      it_behaves_like 'return error', 'with name length greater than 50', { name: Faker::Lorem.characters(number: 60) }
+      it_behaves_like 'return error', 'with email length greater than 255', { email: "#{Faker::Lorem.characters(number: 256)}@example.com" }
     end
   end
 
@@ -80,53 +66,44 @@ include AuthenticationSpecHelper
       login_as(user)
     end
 
-    context 'Update with valid user' do
+    context 'when update with valid user' do
       it 'update user info' do
         params = {
           name: 'update test',
-          email: 'test1@gmail.com',
+          email: 'test1@gmail.com'
         }
-      put :update, params: { id: user.id, user: params }
-      user.reload
-      params.keys.each do |key|
-        expect(user.attributes[key.to_s]).to eq params[key]
-      end
-      expect(flash[:success]).to eq 'User profile updated'
+        put :update, params: { id: user.id, user: params }
+        user.reload
+        params.each_key do |key|
+          expect(user.attributes[key.to_s]).to eq params[key]
+        end
+        expect(flash[:success]).to eq 'User profile updated'
       end
     end
 
-    context 'update with invalid user' do
-      it 'case edit name, email is nil' do
-        put :update, params: { id: user.id, user: {name: nil, email: nil} }
-        expect(user.email).not_to eq(nil)
-        expect(user.name).not_to eq(nil)
+    context 'when update with invalid user' do
+      shared_examples 'return error' do |description, params|
+        let(:response) { put :update, params: { id: user.id, user: params } }
+        context description.to_s do
+          params.each do |param, value|
+            it { expect(user.send(param)).not_to eq(value) }
+          end
+          it { expect(response).to have_http_status(303) }
+          it { expect(response).to render_template('edit') }
+        end
       end
 
-      it 'case edit email has wrong format' do
-        put :update, params: { id: user.id, user: {email: "invalid_email"} }
-        expect(user.email).not_to eq("invalid_email")
+      it_behaves_like 'return error', 'with email nil', { email: nil }
+      it_behaves_like 'return error', 'with name nil', { name: nil }
+      it_behaves_like 'return error', 'with email email has wrong format', { email: 'invalid_email' }
+      it_behaves_like 'return error', 'with duplicate emails', { email: 'example@email.com' } do
+        before do
+          create(:user, email: 'example@email.com')
+        end
       end
-
-      it "case edit duplicate emails" do
-        user = create(:user, email: "example@email.com")
-        put :update, params: { id: user.id, user: {email: "example@email.com"} }
-        expect(response).to have_http_status(303)
-      end
-
-      it "case edit password length less than 6" do
-        put :update, params: { id: user.id, user: {password:1234} }
-        expect(response).to have_http_status(303)
-      end
-
-      it "case edit name length greater than 50" do
-        put :update, params: { id: user.id, user: {name:Faker::Lorem.characters(number: 60)} }
-        expect(response).to render_template('edit')
-      end
-
-      it "case edit email length greater than 255" do
-        put :update, params: { id: user.id, user: { email:Faker::Lorem.characters(number: 256) + "@example.com"} }
-        expect(response).to render_template('edit')
-      end
+      it_behaves_like 'return error', 'with password length less than 6', { password: 1234 }
+      it_behaves_like 'return error', 'with name length greater than 50', { name: Faker::Lorem.characters(number: 60) }
+      it_behaves_like 'return error', 'with email length greater than 255', { email: "#{Faker::Lorem.characters(number: 256)}@example.com" }
     end
   end
 end
