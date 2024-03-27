@@ -29,3 +29,11 @@ Things you may want to cover:
   `bundle exec rspec`
 - For example, to run the sessions_controller_spec.rb file in the spec/controllers/admin directory:
   `bundle exec rspec spec/controllers/admin/sessions_controller_spec.rb`
+* To run test
+- Security audit dependencies
+  `bundle exec bundle audit --update`
+- Security audit application code
+  `bundle exec brakeman -q -w2`
+- Lint Ruby files
+  `bundle exec rubocop --parallel`
+  `bundle exec rubocop --parallel -A`
