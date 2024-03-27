@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Define composable `not_to change` matcher.
 # cf. https://stackoverflow.com/a/34969429
 #

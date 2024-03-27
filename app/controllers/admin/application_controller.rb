@@ -1,17 +1,21 @@
-class Admin::ApplicationController < ActionController::Base
-  include Admin::SessionsHelper
+# frozen_string_literal: true
 
-  private
+module Admin
+  class ApplicationController < ActionController::Base
+    include Admin::SessionsHelper
+
+    private
 
     def logged_in_admin
-      unless admin_logged_in?
-        store_location
-        flash[:danger] = "Please log in."
-        redirect_to admin_login_url
-      end
+      return if admin_logged_in?
+
+      store_location
+      flash[:danger] = 'Please log in.'
+      redirect_to admin_login_url
     end
 
     def admin_layout
-      @current_admin.root? ? "root_view" : "admin_view"
+      @current_admin.root? ? 'root_view' : 'admin_view'
     end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: booking_statuses
@@ -28,6 +30,6 @@ RSpec.describe BookingStatus do
   end
 
   describe 'enums' do
-    it { should define_enum_for(:status).with_values(pending: 0, booking: 1, cancel: 2, payment:3 , finished: 4) }
+    it { should define_enum_for(:status).with_values(pending: 0, booking: 1, cancel: 2, payment: 3, finished: 4) }
   end
 end

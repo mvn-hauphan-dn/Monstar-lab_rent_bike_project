@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -33,24 +35,31 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+\z/i
 
-  enum role: [:renter, :lessor]
+  enum role: %i[renter lessor]
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   scope :order_by_newest, -> { order(updated_at: :desc) }
-  scope :filter_by_name_or_email, -> (params_filter){ where('name LIKE ? OR email LIKE ?', "%#{params_filter}%", "%#{params_filter}%") if params_filter.present? }
+  scope :filter_by_name_or_email, lambda { |params_filter|
+                                    if params_filter.present?
+                                      where('name LIKE ? OR email LIKE ?', "%#{params_filter}%", "%#{params_filter}%")
+                                    end
+                                  }
 
-  def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
+  def self.digest(string)
+    cost = if ActiveModel::SecurePassword.min_cost
+             BCrypt::Engine::MIN_COST
+           else
+             BCrypt::Engine.cost
+           end
+    BCrypt::Password.create(string, cost:)
   end
 
-  def User.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
@@ -64,14 +73,14 @@ class User < ApplicationRecord
   end
 
   def authenticated?(attribute, token)
-    digest = self.send("#{attribute}_digest")
+    digest = send("#{attribute}_digest")
     return false if digest.nil?
 
     BCrypt::Password.new(digest).is_password?(token)
   end
 
   def activated?
-    self.activated_at.present?
+    activated_at.present?
   end
 
   def activate
@@ -96,12 +105,13 @@ class User < ApplicationRecord
   end
 
   private
-    def downcase_email
-      self.email = email.downcase
-    end
 
-    def create_activation_digest
-      self.activation_token  = User.new_token
-      self.activation_digest = User.digest(activation_token)
-    end
+  def downcase_email
+    self.email = email.downcase
+  end
+
+  def create_activation_digest
+    self.activation_token  = User.new_token
+    self.activation_digest = User.digest(activation_token)
+  end
 end

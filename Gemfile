@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
-git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
+git_source(:github) { |_repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
+
+gem 'activestorage', '>= 7.0.8.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 7.0.3'
@@ -13,7 +17,7 @@ gem 'sprockets-rails'
 gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 5.0'
+gem 'puma', '>= 6.4.2'
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsbundling-rails'
@@ -40,7 +44,7 @@ gem 'jbuilder'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
@@ -53,10 +57,6 @@ gem 'image_processing', '~> 1.2'
 
 gem 'bcrypt'
 
-gem 'pry'
-
-gem 'faker'
-
 gem 'dotenv-rails'
 
 gem 'kaminari'
@@ -65,23 +65,32 @@ gem 'bootstrap5-kaminari-views'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
 
-  gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
-  gem 'factory_bot_rails'
   gem 'database_cleaner-active_record'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'pry'
+  gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
+  gem 'seed-fu'
   gem 'simplecov'
   gem 'simplecov-lcov'
-  gem 'seed-fu'
-  gem 'pry'
-  gem 'faker'
   gem 'timecop', '~> 0.9.8' # For freezing time in tests
   gem 'webmock' # For stubbing HTTP requests in tests
+
+  # Security tools
+  gem 'brakeman'
+  gem 'bundler-audit'
+  gem 'ruby_audit'
+
+  # Linting
+  gem 'rubocop'
+  gem 'rubocop-rails'
 end
 
 group :development do
   # Annotate ActiveRecord models [https://github.com/ctran/annotate_models]
-  gem "annotate"
+  gem 'annotate'
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
@@ -91,15 +100,16 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem 'spring'
+
+  # Fake send mail
+  gem 'letter_opener'
 end
 
 group :test do
-  gem 'shoulda-matchers', '~> 5.0'
-
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'webdrivers'
   gem 'rails-controller-testing'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'webdrivers'
 end
