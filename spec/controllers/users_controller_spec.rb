@@ -32,22 +32,28 @@ RSpec.describe 'UsersController' do
         phone_number: '12345678'
       }
     end
+
+    let(:invalid_user_params) do
+      {
+        name: 'valid_name',
+        email: 'valid_email@',
+        password: 'valid_password',
+        password_confirmation: 'valid_password',
+        role: :renter ,
+        phone_number: '12345678'
+      }
+    end
+
     context 'create with valid user' do
       it 'create a new user' do
-        expect { post(:create, params: valid_user_params) }.to have_http_status(303)
+        post :create, params: { user: valid_user_params } 
+
+        expect(response).to have_http_status(303)
       end
     end
 
     it "fail to create a user" do
-      post :create, params: { user: {
-          name: Faker::Name.name, 
-          email: "testEmail", 
-          password: user.password,
-          password_confirmation: user.password,
-          activated_at: Time.zone.now,
-          role: user.role
-        }
-      } 
+      post :create, params: { user: invalid_user_params } 
 
       expect(response).to have_http_status(422)
     end
