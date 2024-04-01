@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
@@ -42,9 +44,9 @@ RSpec.describe UsersController, type: :controller do
       end
 
       it 'creates a new user' do
-        expect {
+        expect do
           post :create, params: valid_params
-        }.to change(User, :count).by(1)
+        end.to change(User, :count).by(1)
       end
 
       it 'sends activation email' do
