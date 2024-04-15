@@ -10,10 +10,6 @@ RSpec.describe 'UsersController' do
   describe "GET #new" do
     let(:user) { create(:user) }
 
-    before do
-      login_as(user)
-    end
-
     it "render the :new template" do
       get :new
       expect(response).to render_template("new")
@@ -52,10 +48,23 @@ RSpec.describe 'UsersController' do
       end
     end
 
-    it "fail to create a user" do
-      post :create, params: { user: invalid_user_params } 
+    context 'fail to create a user' do
+      shared_examples 'create fail' do |description, invalid_user_params|
+        let(:response) { post :create, params: { user: attributes_for(:user, invalid_user_params) } }
+        context description.to_s do
+          it { expect(response).to have_http_status(422) }
+        end
+      end
 
-      expect(response).to have_http_status(422)
+      it_behaves_like 'create fail', 'with email nil', { email: nil }
+      it_behaves_like 'create fail', 'with name nil', { name: nil }
+      it_behaves_like 'create fail', 'with email has wrong format', { email: 'invalid_email' }
+      it_behaves_like 'create fail', 'with duplicate emails', { email: 'example@email.com' } do
+        let!(:user) { create(:user, email: 'example@email.com') }
+      end
+      it_behaves_like 'create fail', 'with password length less than 6', { password: 1234 }
+      it_behaves_like 'create fail', 'with name length greater than 50', { name: Faker::Lorem.characters(number: 60) }
+      it_behaves_like 'create fail', 'with email length greater than 255', { email: "#{Faker::Lorem.characters(number: 256)}@example.com" }
     end
     
   end
@@ -72,11 +81,30 @@ RSpec.describe 'UsersController' do
       expect(flash[:success]).to eq 'User profile updated'
     end
 
-    it "update a user fail" do
-      put :update, params: { id: user.id, user:{email: "test"}}
-      expect(response).to have_http_status(303)
+    context 'when update with invalid user' do
+      shared_examples 'update fail' do |description, params|
+        let(:response) { put :update, params: { id: user.id, user: params } }
+        context description.to_s do
+          params.each do |param, value|
+            it { expect(user.send(param)).not_to eq(value) }
+          end
+          it { expect(response).to have_http_status(303) }
+          it { expect(response).to render_template('edit') }
+        end
+      end
+
+      it_behaves_like 'update fail', 'with email nil', { email: nil }
+      it_behaves_like 'update fail', 'with name nil', { name: nil }
+      it_behaves_like 'update fail', 'with email email has wrong format', { email: 'invalid_email' }
+      it_behaves_like 'update fail', 'with duplicate emails', { email: 'example@email.com' } do
+        before do
+          create(:user, email: 'example@email.com')
+        end
+      end
+      it_behaves_like 'update fail', 'with password length less than 6', { password: 1234 }
+      it_behaves_like 'update fail', 'with name length greater than 50', { name: Faker::Lorem.characters(number: 60) }
+      it_behaves_like 'update fail', 'with email length greater than 255', { email: "#{Faker::Lorem.characters(number: 256)}@example.com" }
     end
-    
   end
 
 end
