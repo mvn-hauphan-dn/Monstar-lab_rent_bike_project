@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'UsersController' do
@@ -7,24 +9,23 @@ RSpec.describe 'UsersController' do
     @controller = UsersController.new
   end
 
-  describe "GET #new" do
+  describe 'GET #new' do
     let(:user) { create(:user) }
 
-    it "render the :new template" do
+    it 'render the :new template' do
       get :new
-      expect(response).to render_template("new")
+      expect(response).to render_template('new')
     end
-    
   end
 
-  describe "POST #create" do
+  describe 'POST #create' do
     let(:valid_user_params) do
       {
         name: 'valid_name',
         email: 'valid_email@example.com',
         password: 'valid_password',
         password_confirmation: 'valid_password',
-        role: :renter ,
+        role: :renter,
         phone_number: '12345678'
       }
     end
@@ -35,14 +36,14 @@ RSpec.describe 'UsersController' do
         email: 'valid_email@',
         password: 'valid_password',
         password_confirmation: 'valid_password',
-        role: :renter ,
+        role: :renter,
         phone_number: '12345678'
       }
     end
 
     context 'create with valid user' do
       it 'create a new user' do
-        post :create, params: { user: valid_user_params } 
+        post :create, params: { user: valid_user_params }
 
         expect(response).to have_http_status(303)
       end
@@ -66,18 +67,17 @@ RSpec.describe 'UsersController' do
       it_behaves_like 'create fail', 'with name length greater than 50', { name: Faker::Lorem.characters(number: 60) }
       it_behaves_like 'create fail', 'with email length greater than 255', { email: "#{Faker::Lorem.characters(number: 256)}@example.com" }
     end
-    
   end
 
-  describe "PUT #update" do
+  describe 'PUT #update' do
     let(:user) { create(:user) }
 
     before do
       login_as(user)
     end
 
-    it "update a user successfully" do
-      put :update, params: { id: user.id, user:{name: "test update"}}
+    it 'update a user successfully' do
+      put :update, params: { id: user.id, user: { name: 'test update' } }
       expect(flash[:success]).to eq 'User profile updated'
     end
 
@@ -106,5 +106,4 @@ RSpec.describe 'UsersController' do
       it_behaves_like 'update fail', 'with email length greater than 255', { email: "#{Faker::Lorem.characters(number: 256)}@example.com" }
     end
   end
-
 end

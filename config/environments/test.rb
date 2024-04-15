@@ -62,5 +62,5 @@ Rails.application.configure do
 
   # Set the default host for URL generation in test environment
   config.default_url_options = { host: 'localhost', port: 'localhost' }
-  config.action_mailer.default_url_options = { :host => "test.localhost.com" }
+  config.action_mailer.default_url_options = { host: 'test.localhost.com' }
 end
