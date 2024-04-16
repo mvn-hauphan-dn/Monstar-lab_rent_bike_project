@@ -22,19 +22,31 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'with invalid parameters' do
-      let(:invalid_params) { { user: attributes_for(:user, email: nil) } }
-
-      before do
-        post :create, params: invalid_params
+    shared_examples 'return error' do |description, params|
+      it "does not create a new user #{description}" do
+        expect {
+          post :create, params: { user: attributes_for(:user, params) }
+        }.to_not change(User, :count)
       end
 
-      it 'does not create a new user' do
-        expect { post :create, params: invalid_params }.not_to change(User, :count)
+      it "renders the new template with unprocessable entity status #{description}" do
+        post :create, params: { user: attributes_for(:user, params) }
+        expect(response).to render_template('new')
+        expect(response).to have_http_status(:unprocessable_entity)
       end
+    end
 
-      it 'renders the new template' do
-        expect(response).to render_template(:new)
+    context 'when create with invalid user' do
+      it_behaves_like 'return error', 'with email nil', email: nil
+      it_behaves_like 'return error', 'with name nil', name: nil
+      it_behaves_like 'return error', 'with email has wrong format', email: 'invalid_email'
+      it_behaves_like 'return error', 'with password length less than 6', password: 1234
+      it_behaves_like 'return error', 'with name length greater than 50', name: Faker::Lorem.characters(number: 60)
+      it_behaves_like 'return error', 'with email length greater than 255', email: "#{Faker::Lorem.characters(number: 256)}@example.com"
+      it_behaves_like 'return error', 'with duplicate emails', { email: 'example@email.com' } do
+        before do
+          create(:user, email: 'example@email.com')
+        end
       end
     end
 
@@ -98,19 +110,35 @@ RSpec.describe UsersController, type: :controller do
     let(:invalid_attributes) { attributes_for(:user, name: nil) }
     let(:valid_attributes) { attributes_for(:user, name: 'New Name') }
 
-    context 'with invalid parameters' do
+    shared_examples 'return error' do |description, params|
+      it "does not update user #{description}" do
+        expect {
+          post :create, params: { user: attributes_for(:user, params) }
+        }.to_not change(User, :count)
+      end
+
+      it "renders the new template with unprocessable entity status #{description}" do
+        post :create, params: { user: attributes_for(:user, params) }
+        expect(response).to render_template('new')
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'when create with invalid user' do
       before do
         login_as(user)
         patch :update, params: { id: user.id, user: invalid_attributes }
       end
-
-      it 'does not update the user' do
-        user.reload
-        expect(user.name).not_to be_nil
-      end
-
-      it 'renders the edit template' do
-        expect(response).to render_template(:edit)
+      it_behaves_like 'return error', 'with email nil', email: nil
+      it_behaves_like 'return error', 'with name nil', name: nil
+      it_behaves_like 'return error', 'with email has wrong format', email: 'invalid_email'
+      it_behaves_like 'return error', 'with password length less than 6', password: 1234
+      it_behaves_like 'return error', 'with name length greater than 50', name: Faker::Lorem.characters(number: 60)
+      it_behaves_like 'return error', 'with email length greater than 255', email: "#{Faker::Lorem.characters(number: 256)}@example.com"
+      it_behaves_like 'return error', 'with duplicate emails', { email: 'example@email.com' } do
+        before do
+          create(:user, email: 'example@email.com')
+        end
       end
     end
 
