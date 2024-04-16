@@ -24,9 +24,9 @@ RSpec.describe UsersController, type: :controller do
   describe 'POST #create' do
     shared_examples 'return error' do |description, params|
       it "does not create a new user #{description}" do
-        expect {
+        expect do
           post :create, params: { user: attributes_for(:user, params) }
-        }.to_not change(User, :count)
+        end.to_not change(User, :count)
       end
 
       it "renders the new template with unprocessable entity status #{description}" do
@@ -112,9 +112,9 @@ RSpec.describe UsersController, type: :controller do
 
     shared_examples 'return error' do |description, params|
       it "does not update user #{description}" do
-        expect {
+        expect do
           post :create, params: { user: attributes_for(:user, params) }
-        }.to_not change(User, :count)
+        end.to_not change(User, :count)
       end
 
       it "renders the new template with unprocessable entity status #{description}" do
