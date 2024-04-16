@@ -30,17 +30,6 @@ RSpec.describe 'UsersController' do
       }
     end
 
-    let(:invalid_user_params) do
-      {
-        name: 'valid_name',
-        email: 'valid_email@',
-        password: 'valid_password',
-        password_confirmation: 'valid_password',
-        role: :renter,
-        phone_number: '12345678'
-      }
-    end
-
     context 'create with valid user' do
       it 'create a new user' do
         post :create, params: { user: valid_user_params }
@@ -96,6 +85,13 @@ RSpec.describe 'UsersController' do
       it_behaves_like 'update fail', 'with email nil', { email: nil }
       it_behaves_like 'update fail', 'with name nil', { name: nil }
       it_behaves_like 'update fail', 'with email email has wrong format', { email: 'invalid_email' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: 'sample@' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: 'sample@example' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: 'sample@example.' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: '@example.com' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: 'sample@example..com' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: 'sample@example+alias.com' }
+      it_behaves_like 'update fail', 'with email has wrong format', { email: 'sample@example_underscore.com' }
       it_behaves_like 'update fail', 'with duplicate emails', { email: 'example@email.com' } do
         before do
           create(:user, email: 'example@email.com')
